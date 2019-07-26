@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{D7ECDD1C-DC5E-47D3-92D4-89ACD7D5760B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>MRCcreator</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\Helder\Documents\MRC_creator\garminfitsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Helder\Documents\MRC_creator\garminfitsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="garminfitsdk\fit.cpp" />
+    <ClCompile Include="garminfitsdk\fit_accumulated_field.cpp" />
+    <ClCompile Include="garminfitsdk\fit_accumulator.cpp" />
+    <ClCompile Include="garminfitsdk\fit_buffered_mesg_broadcaster.cpp" />
+    <ClCompile Include="garminfitsdk\fit_buffered_record_mesg_broadcaster.cpp" />
+    <ClCompile Include="garminfitsdk\fit_buffer_encode.cpp" />
+    <ClCompile Include="garminfitsdk\fit_crc.cpp" />
+    <ClCompile Include="garminfitsdk\fit_date_time.cpp" />
+    <ClCompile Include="garminfitsdk\fit_decode.cpp" />
+    <ClCompile Include="garminfitsdk\fit_developer_field.cpp" />
+    <ClCompile Include="garminfitsdk\fit_developer_field_definition.cpp" />
+    <ClCompile Include="garminfitsdk\fit_developer_field_description.cpp" />
+    <ClCompile Include="garminfitsdk\fit_encode.cpp" />
+    <ClCompile Include="garminfitsdk\fit_factory.cpp" />
+    <ClCompile Include="garminfitsdk\fit_field.cpp" />
+    <ClCompile Include="garminfitsdk\fit_field_base.cpp" />
+    <ClCompile Include="garminfitsdk\fit_field_definition.cpp" />
+    <ClCompile Include="garminfitsdk\fit_mesg.cpp" />
+    <ClCompile Include="garminfitsdk\fit_mesg_broadcaster.cpp" />
+    <ClCompile Include="garminfitsdk\fit_mesg_definition.cpp" />
+    <ClCompile Include="garminfitsdk\fit_mesg_with_event_broadcaster.cpp" />
+    <ClCompile Include="garminfitsdk\fit_profile.cpp" />
+    <ClCompile Include="garminfitsdk\fit_protocol_validator.cpp" />
+    <ClCompile Include="garminfitsdk\fit_unicode.cpp" />
+    <ClCompile Include="MRC_creator.cpp" />
+    <ClCompile Include="readFile.cpp" />
+    <ClCompile Include="writeFIT.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Helder\Documents\MRC_creator\garminfitsdk\c;C:\Users\Helder\Documents\MRC_creator\garminfitsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="writeMRC.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="garminfitsdk\fit.hpp" />
+    <ClInclude Include="garminfitsdk\FitDecode.h" />
+    <ClInclude Include="garminfitsdk\FitDeveloperField.h" />
+    <ClInclude Include="garminfitsdk\FitEncode.h" />
+    <ClInclude Include="garminfitsdk\FitField.h" />
+    <ClInclude Include="garminfitsdk\FitFieldDefinition.h" />
+    <ClInclude Include="garminfitsdk\FitMesg.h" />
+    <ClInclude Include="garminfitsdk\FitMesgDefinition.h" />
+    <ClInclude Include="garminfitsdk\fit_accelerometer_data_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_accelerometer_data_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_accumulated_field.hpp" />
+    <ClInclude Include="garminfitsdk\fit_accumulator.hpp" />
+    <ClInclude Include="garminfitsdk\fit_activity_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_activity_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_ant_channel_id_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_ant_channel_id_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_ant_rx_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_ant_rx_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_ant_tx_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_ant_tx_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_aviation_attitude_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_aviation_attitude_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_barometer_data_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_barometer_data_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_bike_profile_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_bike_profile_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_blood_pressure_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_blood_pressure_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_buffered_mesg_broadcaster.hpp" />
+    <ClInclude Include="garminfitsdk\fit_buffered_record_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_buffered_record_mesg_broadcaster.hpp" />
+    <ClInclude Include="garminfitsdk\fit_buffered_record_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_buffer_encode.hpp" />
+    <ClInclude Include="garminfitsdk\fit_cadence_zone_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_cadence_zone_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_camera_event_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_camera_event_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_capabilities_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_capabilities_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_config.hpp" />
+    <ClInclude Include="garminfitsdk\fit_connectivity_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_connectivity_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_course_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_course_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_course_point_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_course_point_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_crc.hpp" />
+    <ClInclude Include="garminfitsdk\fit_date_time.hpp" />
+    <ClInclude Include="garminfitsdk\fit_decode.hpp" />
+    <ClInclude Include="garminfitsdk\fit_developer_data_id_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_developer_data_id_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_developer_field.hpp" />
+    <ClInclude Include="garminfitsdk\fit_developer_field_definition.hpp" />
+    <ClInclude Include="garminfitsdk\fit_developer_field_description.hpp" />
+    <ClInclude Include="garminfitsdk\fit_developer_field_description_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_device_info_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_device_info_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_device_settings_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_device_settings_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_dive_alarm_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_dive_alarm_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_dive_gas_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_dive_gas_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_dive_settings_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_dive_settings_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_dive_summary_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_dive_summary_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_encode.hpp" />
+    <ClInclude Include="garminfitsdk\fit_event_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_event_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_exd_data_concept_configuration_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_exd_data_concept_configuration_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_exd_data_field_configuration_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_exd_data_field_configuration_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_exd_screen_configuration_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_exd_screen_configuration_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_exercise_title_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_exercise_title_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_factory.hpp" />
+    <ClInclude Include="garminfitsdk\fit_field.hpp" />
+    <ClInclude Include="garminfitsdk\fit_field_base.hpp" />
+    <ClInclude Include="garminfitsdk\fit_field_capabilities_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_field_capabilities_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_field_definition.hpp" />
+    <ClInclude Include="garminfitsdk\fit_field_description_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_field_description_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_file_capabilities_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_file_capabilities_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_file_creator_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_file_creator_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_file_id_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_file_id_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_goal_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_goal_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_gps_metadata_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_gps_metadata_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_gyroscope_data_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_gyroscope_data_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_hrm_profile_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_hrm_profile_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_hrv_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_hrv_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_hr_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_hr_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_hr_zone_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_hr_zone_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_lap_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_lap_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_length_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_length_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_magnetometer_data_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_magnetometer_data_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_memo_glob_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_memo_glob_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg_broadcaster.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg_broadcast_plugin.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg_capabilities_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg_capabilities_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg_definition.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg_definition_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg_with_event.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg_with_event_broadcaster.hpp" />
+    <ClInclude Include="garminfitsdk\fit_mesg_with_event_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_met_zone_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_met_zone_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_monitoring_info_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_monitoring_info_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_monitoring_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_monitoring_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_nmea_sentence_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_nmea_sentence_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_obdii_data_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_obdii_data_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_ohr_settings_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_ohr_settings_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_one_d_sensor_calibration_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_one_d_sensor_calibration_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_pad_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_pad_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_power_zone_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_power_zone_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_profile.hpp" />
+    <ClInclude Include="garminfitsdk\fit_protocol_validator.hpp" />
+    <ClInclude Include="garminfitsdk\fit_record_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_record_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_runtime_exception.hpp" />
+    <ClInclude Include="garminfitsdk\fit_schedule_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_schedule_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_sdm_profile_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_sdm_profile_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_segment_file_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_segment_file_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_segment_id_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_segment_id_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_segment_lap_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_segment_lap_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_segment_leaderboard_entry_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_segment_leaderboard_entry_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_segment_point_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_segment_point_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_session_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_session_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_set_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_set_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_slave_device_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_slave_device_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_software_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_software_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_speed_zone_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_speed_zone_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_sport_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_sport_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_stress_level_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_stress_level_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_three_d_sensor_calibration_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_three_d_sensor_calibration_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_timestamp_correlation_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_timestamp_correlation_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_totals_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_totals_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_training_file_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_training_file_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_unicode.hpp" />
+    <ClInclude Include="garminfitsdk\fit_user_profile_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_user_profile_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_video_clip_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_video_clip_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_video_description_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_video_description_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_video_frame_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_video_frame_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_video_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_video_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_video_title_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_video_title_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_watchface_settings_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_watchface_settings_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_weather_alert_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_weather_alert_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_weather_conditions_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_weather_conditions_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_weight_scale_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_weight_scale_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_workout_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_workout_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_workout_session_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_workout_session_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_workout_step_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_workout_step_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_zones_target_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_zones_target_mesg_listener.hpp" />
+    <ClInclude Include="readFile.h" />
+    <ClInclude Include="writeFIT.h" />
+    <ClInclude Include="writeMRC.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="garminfitsdk\FitDecode.mm" />
+    <None Include="garminfitsdk\FitDeveloperField.mm" />
+    <None Include="garminfitsdk\FitEncode.mm" />
+    <None Include="garminfitsdk\FitField.mm" />
+    <None Include="garminfitsdk\FitFieldDefinition.mm" />
+    <None Include="garminfitsdk\FitMesg.mm" />
+    <None Include="garminfitsdk\FitMesgDefinition.mm" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
