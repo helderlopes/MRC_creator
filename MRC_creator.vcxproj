@@ -411,6 +411,7 @@
     <None Include="garminfitsdk\FitFieldDefinition.mm" />
     <None Include="garminfitsdk\FitMesg.mm" />
     <None Include="garminfitsdk\FitMesgDefinition.mm" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

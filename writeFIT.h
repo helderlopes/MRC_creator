@@ -8,7 +8,7 @@
 #include "fit_mesg_broadcaster.hpp"
 //#include "fit_date_time.hpp"
 
-#define FTP 215
+#define FTP 220
 #define POWER_OFFSET 10
 
 #define VALUE_TO_ADD_ON_TARGET_POWER 1000

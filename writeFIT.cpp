@@ -1,5 +1,6 @@
 #include "writeFIT.h"
 #include "Windows.h"
+#include <functional>
 
 std::wstring s2ws(const std::string& str)
 {
@@ -56,9 +57,10 @@ void writeFIT::fillFileId()
 	fit::FileIdMesg fileIdMesg; // Every FIT file requires a File ID message
 	fileIdMesg.SetType(FIT_FILE_WORKOUT);
 	fileIdMesg.SetManufacturer(FIT_MANUFACTURER_GARMIN);
-	//fileIdMesg.SetProduct(65534);
-	//fileIdMesg.SetSerialNumber(128779944);
-	//fileIdMesg.SetTimeCreated(915630319);
+	//fileIdMesg.SetProduct(65534); //65534 = Garmin Edge 520
+	//fileIdMesg.SetSerialNumber(128779944); //My Serial Number
+	//fileIdMesg.SetTimeCreated(915630319); //A random created time
+	fileIdMesg.SetNumber((FIT_UINT16)std::hash<std::string>{}(outputFileName)); //creating a hash from based on file name to be used as a unique identifier
 
 	encode.Write(fileIdMesg);
 

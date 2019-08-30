@@ -772,5 +772,6 @@
     <None Include="garminfitsdk\FitMesgDefinition.mm">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="README.md" />
   </ItemGroup>
 </Project>
