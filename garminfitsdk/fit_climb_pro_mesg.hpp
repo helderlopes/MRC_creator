@@ -15,45 +15,45 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#if !defined(FIT_WORKOUT_SESSION_MESG_HPP)
-#define FIT_WORKOUT_SESSION_MESG_HPP
+#if !defined(FIT_CLIMB_PRO_MESG_HPP)
+#define FIT_CLIMB_PRO_MESG_HPP
 
 #include "fit_mesg.hpp"
 
 namespace fit
 {
 
-class WorkoutSessionMesg : public Mesg
+class ClimbProMesg : public Mesg
 {
 public:
     class FieldDefNum final
     {
     public:
-       static const FIT_UINT8 MessageIndex = 254;
-       static const FIT_UINT8 Sport = 0;
-       static const FIT_UINT8 SubSport = 1;
-       static const FIT_UINT8 NumValidSteps = 2;
-       static const FIT_UINT8 FirstStepIndex = 3;
-       static const FIT_UINT8 PoolLength = 4;
-       static const FIT_UINT8 PoolLengthUnit = 5;
+       static const FIT_UINT8 Timestamp = 253;
+       static const FIT_UINT8 PositionLat = 0;
+       static const FIT_UINT8 PositionLong = 1;
+       static const FIT_UINT8 ClimbProEvent = 2;
+       static const FIT_UINT8 ClimbNumber = 3;
+       static const FIT_UINT8 ClimbCategory = 4;
+       static const FIT_UINT8 CurrentDist = 5;
        static const FIT_UINT8 Invalid = FIT_FIELD_NUM_INVALID;
     };
 
-    WorkoutSessionMesg(void) : Mesg(Profile::MESG_WORKOUT_SESSION)
+    ClimbProMesg(void) : Mesg(Profile::MESG_CLIMB_PRO)
     {
     }
 
-    WorkoutSessionMesg(const Mesg &mesg) : Mesg(mesg)
+    ClimbProMesg(const Mesg &mesg) : Mesg(mesg)
     {
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of message_index field
+    // Checks the validity of timestamp field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsMessageIndexValid() const
+    FIT_BOOL IsTimestampValid() const
     {
-        const Field* field = GetField(254);
+        const Field* field = GetField(253);
         if( FIT_NULL == field )
         {
             return FIT_FALSE;
@@ -63,26 +63,28 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns message_index field
+    // Returns timestamp field
+    // Units: s
     ///////////////////////////////////////////////////////////////////////
-    FIT_MESSAGE_INDEX GetMessageIndex(void) const
+    FIT_DATE_TIME GetTimestamp(void) const
     {
-        return GetFieldUINT16Value(254, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldUINT32Value(253, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set message_index field
+    // Set timestamp field
+    // Units: s
     ///////////////////////////////////////////////////////////////////////
-    void SetMessageIndex(FIT_MESSAGE_INDEX messageIndex)
+    void SetTimestamp(FIT_DATE_TIME timestamp)
     {
-        SetFieldUINT16Value(254, messageIndex, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldUINT32Value(253, timestamp, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of sport field
+    // Checks the validity of position_lat field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsSportValid() const
+    FIT_BOOL IsPositionLatValid() const
     {
         const Field* field = GetField(0);
         if( FIT_NULL == field )
@@ -94,26 +96,28 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns sport field
+    // Returns position_lat field
+    // Units: semicircles
     ///////////////////////////////////////////////////////////////////////
-    FIT_SPORT GetSport(void) const
+    FIT_SINT32 GetPositionLat(void) const
     {
-        return GetFieldENUMValue(0, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldSINT32Value(0, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set sport field
+    // Set position_lat field
+    // Units: semicircles
     ///////////////////////////////////////////////////////////////////////
-    void SetSport(FIT_SPORT sport)
+    void SetPositionLat(FIT_SINT32 positionLat)
     {
-        SetFieldENUMValue(0, sport, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldSINT32Value(0, positionLat, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of sub_sport field
+    // Checks the validity of position_long field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsSubSportValid() const
+    FIT_BOOL IsPositionLongValid() const
     {
         const Field* field = GetField(1);
         if( FIT_NULL == field )
@@ -125,26 +129,28 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns sub_sport field
+    // Returns position_long field
+    // Units: semicircles
     ///////////////////////////////////////////////////////////////////////
-    FIT_SUB_SPORT GetSubSport(void) const
+    FIT_SINT32 GetPositionLong(void) const
     {
-        return GetFieldENUMValue(1, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldSINT32Value(1, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set sub_sport field
+    // Set position_long field
+    // Units: semicircles
     ///////////////////////////////////////////////////////////////////////
-    void SetSubSport(FIT_SUB_SPORT subSport)
+    void SetPositionLong(FIT_SINT32 positionLong)
     {
-        SetFieldENUMValue(1, subSport, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldSINT32Value(1, positionLong, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of num_valid_steps field
+    // Checks the validity of climb_pro_event field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsNumValidStepsValid() const
+    FIT_BOOL IsClimbProEventValid() const
     {
         const Field* field = GetField(2);
         if( FIT_NULL == field )
@@ -156,26 +162,26 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns num_valid_steps field
+    // Returns climb_pro_event field
     ///////////////////////////////////////////////////////////////////////
-    FIT_UINT16 GetNumValidSteps(void) const
+    FIT_CLIMB_PRO_EVENT GetClimbProEvent(void) const
     {
-        return GetFieldUINT16Value(2, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldENUMValue(2, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set num_valid_steps field
+    // Set climb_pro_event field
     ///////////////////////////////////////////////////////////////////////
-    void SetNumValidSteps(FIT_UINT16 numValidSteps)
+    void SetClimbProEvent(FIT_CLIMB_PRO_EVENT climbProEvent)
     {
-        SetFieldUINT16Value(2, numValidSteps, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldENUMValue(2, climbProEvent, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of first_step_index field
+    // Checks the validity of climb_number field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsFirstStepIndexValid() const
+    FIT_BOOL IsClimbNumberValid() const
     {
         const Field* field = GetField(3);
         if( FIT_NULL == field )
@@ -187,26 +193,26 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns first_step_index field
+    // Returns climb_number field
     ///////////////////////////////////////////////////////////////////////
-    FIT_UINT16 GetFirstStepIndex(void) const
+    FIT_UINT16 GetClimbNumber(void) const
     {
         return GetFieldUINT16Value(3, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set first_step_index field
+    // Set climb_number field
     ///////////////////////////////////////////////////////////////////////
-    void SetFirstStepIndex(FIT_UINT16 firstStepIndex)
+    void SetClimbNumber(FIT_UINT16 climbNumber)
     {
-        SetFieldUINT16Value(3, firstStepIndex, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldUINT16Value(3, climbNumber, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of pool_length field
+    // Checks the validity of climb_category field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsPoolLengthValid() const
+    FIT_BOOL IsClimbCategoryValid() const
     {
         const Field* field = GetField(4);
         if( FIT_NULL == field )
@@ -218,28 +224,26 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns pool_length field
-    // Units: m
+    // Returns climb_category field
     ///////////////////////////////////////////////////////////////////////
-    FIT_FLOAT32 GetPoolLength(void) const
+    FIT_UINT8 GetClimbCategory(void) const
     {
-        return GetFieldFLOAT32Value(4, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldUINT8Value(4, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set pool_length field
-    // Units: m
+    // Set climb_category field
     ///////////////////////////////////////////////////////////////////////
-    void SetPoolLength(FIT_FLOAT32 poolLength)
+    void SetClimbCategory(FIT_UINT8 climbCategory)
     {
-        SetFieldFLOAT32Value(4, poolLength, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldUINT8Value(4, climbCategory, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of pool_length_unit field
+    // Checks the validity of current_dist field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsPoolLengthUnitValid() const
+    FIT_BOOL IsCurrentDistValid() const
     {
         const Field* field = GetField(5);
         if( FIT_NULL == field )
@@ -251,23 +255,25 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns pool_length_unit field
+    // Returns current_dist field
+    // Units: m
     ///////////////////////////////////////////////////////////////////////
-    FIT_DISPLAY_MEASURE GetPoolLengthUnit(void) const
+    FIT_FLOAT32 GetCurrentDist(void) const
     {
-        return GetFieldENUMValue(5, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldFLOAT32Value(5, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set pool_length_unit field
+    // Set current_dist field
+    // Units: m
     ///////////////////////////////////////////////////////////////////////
-    void SetPoolLengthUnit(FIT_DISPLAY_MEASURE poolLengthUnit)
+    void SetCurrentDist(FIT_FLOAT32 currentDist)
     {
-        SetFieldENUMValue(5, poolLengthUnit, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldFLOAT32Value(5, currentDist, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
 };
 
 } // namespace fit
 
-#endif // !defined(FIT_WORKOUT_SESSION_MESG_HPP)
+#endif // !defined(FIT_CLIMB_PRO_MESG_HPP)

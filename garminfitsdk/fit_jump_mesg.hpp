@@ -15,70 +15,39 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
-#if !defined(FIT_TOTALS_MESG_HPP)
-#define FIT_TOTALS_MESG_HPP
+#if !defined(FIT_JUMP_MESG_HPP)
+#define FIT_JUMP_MESG_HPP
 
 #include "fit_mesg.hpp"
 
 namespace fit
 {
 
-class TotalsMesg : public Mesg
+class JumpMesg : public Mesg
 {
 public:
     class FieldDefNum final
     {
     public:
-       static const FIT_UINT8 MessageIndex = 254;
        static const FIT_UINT8 Timestamp = 253;
-       static const FIT_UINT8 TimerTime = 0;
-       static const FIT_UINT8 Distance = 1;
-       static const FIT_UINT8 Calories = 2;
-       static const FIT_UINT8 Sport = 3;
-       static const FIT_UINT8 ElapsedTime = 4;
-       static const FIT_UINT8 Sessions = 5;
-       static const FIT_UINT8 ActiveTime = 6;
-       static const FIT_UINT8 SportIndex = 9;
+       static const FIT_UINT8 Distance = 0;
+       static const FIT_UINT8 Height = 1;
+       static const FIT_UINT8 Rotations = 2;
+       static const FIT_UINT8 HangTime = 3;
+       static const FIT_UINT8 Score = 4;
+       static const FIT_UINT8 PositionLat = 5;
+       static const FIT_UINT8 PositionLong = 6;
+       static const FIT_UINT8 Speed = 7;
+       static const FIT_UINT8 EnhancedSpeed = 8;
        static const FIT_UINT8 Invalid = FIT_FIELD_NUM_INVALID;
     };
 
-    TotalsMesg(void) : Mesg(Profile::MESG_TOTALS)
+    JumpMesg(void) : Mesg(Profile::MESG_JUMP)
     {
     }
 
-    TotalsMesg(const Mesg &mesg) : Mesg(mesg)
+    JumpMesg(const Mesg &mesg) : Mesg(mesg)
     {
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of message_index field
-    // Returns FIT_TRUE if field is valid
-    ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsMessageIndexValid() const
-    {
-        const Field* field = GetField(254);
-        if( FIT_NULL == field )
-        {
-            return FIT_FALSE;
-        }
-
-        return field->IsValueValid();
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    // Returns message_index field
-    ///////////////////////////////////////////////////////////////////////
-    FIT_MESSAGE_INDEX GetMessageIndex(void) const
-    {
-        return GetFieldUINT16Value(254, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    // Set message_index field
-    ///////////////////////////////////////////////////////////////////////
-    void SetMessageIndex(FIT_MESSAGE_INDEX messageIndex)
-    {
-        SetFieldUINT16Value(254, messageIndex, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -115,47 +84,12 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of timer_time field
-    // Returns FIT_TRUE if field is valid
-    ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsTimerTimeValid() const
-    {
-        const Field* field = GetField(0);
-        if( FIT_NULL == field )
-        {
-            return FIT_FALSE;
-        }
-
-        return field->IsValueValid();
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    // Returns timer_time field
-    // Units: s
-    // Comment: Excludes pauses
-    ///////////////////////////////////////////////////////////////////////
-    FIT_UINT32 GetTimerTime(void) const
-    {
-        return GetFieldUINT32Value(0, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    // Set timer_time field
-    // Units: s
-    // Comment: Excludes pauses
-    ///////////////////////////////////////////////////////////////////////
-    void SetTimerTime(FIT_UINT32 timerTime)
-    {
-        SetFieldUINT32Value(0, timerTime, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
-    }
-
-    ///////////////////////////////////////////////////////////////////////
     // Checks the validity of distance field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
     FIT_BOOL IsDistanceValid() const
     {
-        const Field* field = GetField(1);
+        const Field* field = GetField(0);
         if( FIT_NULL == field )
         {
             return FIT_FALSE;
@@ -168,25 +102,58 @@ public:
     // Returns distance field
     // Units: m
     ///////////////////////////////////////////////////////////////////////
-    FIT_UINT32 GetDistance(void) const
+    FIT_FLOAT32 GetDistance(void) const
     {
-        return GetFieldUINT32Value(1, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldFLOAT32Value(0, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
     // Set distance field
     // Units: m
     ///////////////////////////////////////////////////////////////////////
-    void SetDistance(FIT_UINT32 distance)
+    void SetDistance(FIT_FLOAT32 distance)
     {
-        SetFieldUINT32Value(1, distance, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldFLOAT32Value(0, distance, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of calories field
+    // Checks the validity of height field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsCaloriesValid() const
+    FIT_BOOL IsHeightValid() const
+    {
+        const Field* field = GetField(1);
+        if( FIT_NULL == field )
+        {
+            return FIT_FALSE;
+        }
+
+        return field->IsValueValid();
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Returns height field
+    // Units: m
+    ///////////////////////////////////////////////////////////////////////
+    FIT_FLOAT32 GetHeight(void) const
+    {
+        return GetFieldFLOAT32Value(1, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Set height field
+    // Units: m
+    ///////////////////////////////////////////////////////////////////////
+    void SetHeight(FIT_FLOAT32 height)
+    {
+        SetFieldFLOAT32Value(1, height, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Checks the validity of rotations field
+    // Returns FIT_TRUE if field is valid
+    ///////////////////////////////////////////////////////////////////////
+    FIT_BOOL IsRotationsValid() const
     {
         const Field* field = GetField(2);
         if( FIT_NULL == field )
@@ -198,28 +165,26 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns calories field
-    // Units: kcal
+    // Returns rotations field
     ///////////////////////////////////////////////////////////////////////
-    FIT_UINT32 GetCalories(void) const
+    FIT_UINT8 GetRotations(void) const
     {
-        return GetFieldUINT32Value(2, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldUINT8Value(2, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set calories field
-    // Units: kcal
+    // Set rotations field
     ///////////////////////////////////////////////////////////////////////
-    void SetCalories(FIT_UINT32 calories)
+    void SetRotations(FIT_UINT8 rotations)
     {
-        SetFieldUINT32Value(2, calories, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldUINT8Value(2, rotations, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of sport field
+    // Checks the validity of hang_time field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsSportValid() const
+    FIT_BOOL IsHangTimeValid() const
     {
         const Field* field = GetField(3);
         if( FIT_NULL == field )
@@ -231,26 +196,28 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns sport field
+    // Returns hang_time field
+    // Units: s
     ///////////////////////////////////////////////////////////////////////
-    FIT_SPORT GetSport(void) const
+    FIT_FLOAT32 GetHangTime(void) const
     {
-        return GetFieldENUMValue(3, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldFLOAT32Value(3, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set sport field
+    // Set hang_time field
+    // Units: s
     ///////////////////////////////////////////////////////////////////////
-    void SetSport(FIT_SPORT sport)
+    void SetHangTime(FIT_FLOAT32 hangTime)
     {
-        SetFieldENUMValue(3, sport, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldFLOAT32Value(3, hangTime, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of elapsed_time field
+    // Checks the validity of score field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsElapsedTimeValid() const
+    FIT_BOOL IsScoreValid() const
     {
         const Field* field = GetField(4);
         if( FIT_NULL == field )
@@ -262,30 +229,28 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns elapsed_time field
-    // Units: s
-    // Comment: Includes pauses
+    // Returns score field
+    // Comment: A score for a jump calculated based on hang time, rotations, and distance.
     ///////////////////////////////////////////////////////////////////////
-    FIT_UINT32 GetElapsedTime(void) const
+    FIT_FLOAT32 GetScore(void) const
     {
-        return GetFieldUINT32Value(4, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldFLOAT32Value(4, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set elapsed_time field
-    // Units: s
-    // Comment: Includes pauses
+    // Set score field
+    // Comment: A score for a jump calculated based on hang time, rotations, and distance.
     ///////////////////////////////////////////////////////////////////////
-    void SetElapsedTime(FIT_UINT32 elapsedTime)
+    void SetScore(FIT_FLOAT32 score)
     {
-        SetFieldUINT32Value(4, elapsedTime, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldFLOAT32Value(4, score, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of sessions field
+    // Checks the validity of position_lat field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsSessionsValid() const
+    FIT_BOOL IsPositionLatValid() const
     {
         const Field* field = GetField(5);
         if( FIT_NULL == field )
@@ -297,26 +262,28 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns sessions field
+    // Returns position_lat field
+    // Units: semicircles
     ///////////////////////////////////////////////////////////////////////
-    FIT_UINT16 GetSessions(void) const
+    FIT_SINT32 GetPositionLat(void) const
     {
-        return GetFieldUINT16Value(5, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldSINT32Value(5, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set sessions field
+    // Set position_lat field
+    // Units: semicircles
     ///////////////////////////////////////////////////////////////////////
-    void SetSessions(FIT_UINT16 sessions)
+    void SetPositionLat(FIT_SINT32 positionLat)
     {
-        SetFieldUINT16Value(5, sessions, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldSINT32Value(5, positionLat, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of active_time field
+    // Checks the validity of position_long field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsActiveTimeValid() const
+    FIT_BOOL IsPositionLongValid() const
     {
         const Field* field = GetField(6);
         if( FIT_NULL == field )
@@ -328,30 +295,30 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns active_time field
-    // Units: s
+    // Returns position_long field
+    // Units: semicircles
     ///////////////////////////////////////////////////////////////////////
-    FIT_UINT32 GetActiveTime(void) const
+    FIT_SINT32 GetPositionLong(void) const
     {
-        return GetFieldUINT32Value(6, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldSINT32Value(6, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set active_time field
-    // Units: s
+    // Set position_long field
+    // Units: semicircles
     ///////////////////////////////////////////////////////////////////////
-    void SetActiveTime(FIT_UINT32 activeTime)
+    void SetPositionLong(FIT_SINT32 positionLong)
     {
-        SetFieldUINT32Value(6, activeTime, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldSINT32Value(6, positionLong, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Checks the validity of sport_index field
+    // Checks the validity of speed field
     // Returns FIT_TRUE if field is valid
     ///////////////////////////////////////////////////////////////////////
-    FIT_BOOL IsSportIndexValid() const
+    FIT_BOOL IsSpeedValid() const
     {
-        const Field* field = GetField(9);
+        const Field* field = GetField(7);
         if( FIT_NULL == field )
         {
             return FIT_FALSE;
@@ -361,23 +328,58 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Returns sport_index field
+    // Returns speed field
+    // Units: m/s
     ///////////////////////////////////////////////////////////////////////
-    FIT_UINT8 GetSportIndex(void) const
+    FIT_FLOAT32 GetSpeed(void) const
     {
-        return GetFieldUINT8Value(9, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        return GetFieldFLOAT32Value(7, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
     ///////////////////////////////////////////////////////////////////////
-    // Set sport_index field
+    // Set speed field
+    // Units: m/s
     ///////////////////////////////////////////////////////////////////////
-    void SetSportIndex(FIT_UINT8 sportIndex)
+    void SetSpeed(FIT_FLOAT32 speed)
     {
-        SetFieldUINT8Value(9, sportIndex, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+        SetFieldFLOAT32Value(7, speed, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Checks the validity of enhanced_speed field
+    // Returns FIT_TRUE if field is valid
+    ///////////////////////////////////////////////////////////////////////
+    FIT_BOOL IsEnhancedSpeedValid() const
+    {
+        const Field* field = GetField(8);
+        if( FIT_NULL == field )
+        {
+            return FIT_FALSE;
+        }
+
+        return field->IsValueValid();
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Returns enhanced_speed field
+    // Units: m/s
+    ///////////////////////////////////////////////////////////////////////
+    FIT_FLOAT32 GetEnhancedSpeed(void) const
+    {
+        return GetFieldFLOAT32Value(8, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    // Set enhanced_speed field
+    // Units: m/s
+    ///////////////////////////////////////////////////////////////////////
+    void SetEnhancedSpeed(FIT_FLOAT32 enhancedSpeed)
+    {
+        SetFieldFLOAT32Value(8, enhancedSpeed, 0, FIT_SUBFIELD_INDEX_MAIN_FIELD);
     }
 
 };
 
 } // namespace fit
 
-#endif // !defined(FIT_TOTALS_MESG_HPP)
+#endif // !defined(FIT_JUMP_MESG_HPP)
