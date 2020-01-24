@@ -7,6 +7,7 @@
 #include "readFile.h"
 #include "writeMRC.h"
 #include "writeFIT.h"
+#include "workoutData.h"
 #pragma comment(lib, "User32.lib")
 
 void listFilesOfCurDir(HANDLE &handle, WIN32_FIND_DATA &ffd)
@@ -71,6 +72,9 @@ int main()
 			writeFIT.createFile(fileName);
 			writeFIT.fillFile(read.data);
 			write.closeFile();
+
+			workoutData workoutData;
+			workoutData.writeWorkoutData(read.data);
 		}
 	} 
 	while (hasNextFile(hFind, ffd));

@@ -180,6 +180,7 @@
     <ClCompile Include="garminfitsdk\fit_unicode.cpp" />
     <ClCompile Include="MRC_creator.cpp" />
     <ClCompile Include="readFile.cpp" />
+    <ClCompile Include="workoutData.cpp" />
     <ClCompile Include="writeFIT.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Helder\Documents\MRC_creator\garminfitsdk\c;C:\Users\Helder\Documents\MRC_creator\garminfitsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -400,6 +401,7 @@
     <ClInclude Include="garminfitsdk\fit_zones_target_mesg.hpp" />
     <ClInclude Include="garminfitsdk\fit_zones_target_mesg_listener.hpp" />
     <ClInclude Include="readFile.h" />
+    <ClInclude Include="workoutData.h" />
     <ClInclude Include="writeFIT.h" />
     <ClInclude Include="writeMRC.h" />
   </ItemGroup>

@@ -99,6 +99,9 @@
     <ClCompile Include="garminfitsdk\fit_unicode.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="workoutData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="readFile.h">
@@ -748,6 +751,9 @@
     </ClInclude>
     <ClInclude Include="garminfitsdk\FitMesgDefinition.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="workoutData.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
