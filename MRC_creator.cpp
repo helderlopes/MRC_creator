@@ -48,8 +48,10 @@ int main()
 {
 	WIN32_FIND_DATA ffd;
 	HANDLE hFind;
+	workoutData workoutData;
+	workoutData.createFile((char*)"workoutsInfo.csv");
+	
 	listFilesOfCurDir(hFind, ffd);
-
 	do
 	{
 		char fileName[_MAX_PATH];
@@ -73,13 +75,14 @@ int main()
 			writeFIT.fillFile(read.data);
 			write.closeFile();
 
-			workoutData workoutData;
-			workoutData.writeWorkoutData(read.data);
+			fileName[strlen(fileName) - SIZE_OF_FILE_EXTENSION] = '\0';
+			workoutData.writeWorkoutData(read.data, fileName);
 		}
 	} 
 	while (hasNextFile(hFind, ffd));
-
 	FindClose(hFind);
+
+	workoutData.closeFile();
 
 	return 0;
 }

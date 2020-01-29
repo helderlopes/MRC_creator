@@ -13,9 +13,13 @@ class workoutData
 public:
 	workoutData();
 	~workoutData();
-	void writeWorkoutData(workoutInfo& data);
+	void writeWorkoutData(workoutInfo& data, char* workoutName);
+	void createFile(char* fileName);
+	void closeFile();
 
 private:
+	void fillHeader();
+	void fillInfo(char* workoutName);
 	void calculateNP();
 	void calculateIF();
 	void calculateTSS();
@@ -25,7 +29,6 @@ private:
 	void calculateTotalTime(workoutInfo& data);
 	void generatePowerArray(workoutInfo& data);
 
-
 	float normalizedPower; //NP in Watts
 	float intensityFactor; //IF
 	float trainingStressScore; //TSS 
@@ -34,4 +37,7 @@ private:
 	float totalWork; //total Work in kJ
 	unsigned int totalTime; //time in seconds
 	unsigned int *powerBySecond; //array with power divided second by second
+
+	ofstream outputFile;
+	char outputFileName[_MAX_PATH];
 };

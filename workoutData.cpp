@@ -3,6 +3,7 @@
 
 workoutData::workoutData()
 {
+	memset(outputFileName, NULL, sizeof(outputFileName));
 	totalTime = 0;
 	normalizedPower = averagePower = totalWork = intensityFactor = trainingStressScore = variabilityIndex = 0.0;
 	powerBySecond = NULL;
@@ -14,9 +15,13 @@ workoutData::~workoutData()
 	{
 		delete[] powerBySecond;
 	}
+	if (outputFile.is_open())
+	{
+		outputFile.close();
+	}
 }
 
-void workoutData::writeWorkoutData(workoutInfo& data)
+void workoutData::writeWorkoutData(workoutInfo& data, char* workoutName)
 {
 	calculateTotalTime(data);
 	generatePowerArray(data);
@@ -26,6 +31,40 @@ void workoutData::writeWorkoutData(workoutInfo& data)
 	calculateIF();
 	calculateVI();
 	calculateTSS();
+	fillInfo(workoutName);
+}
+
+void workoutData::createFile(char* fileName)
+{
+	strcpy(outputFileName, fileName);
+	outputFile.open(outputFileName);
+	fillHeader();
+}
+
+void workoutData::closeFile()
+{
+	if (outputFile.is_open())
+	{
+		outputFile.close();
+	}
+}
+
+void workoutData::fillHeader()
+{
+	outputFile << "Name,Time(min),Work(kJ),AvgP(W),NP(W),IF,VI,TSS\n";
+}
+
+void workoutData::fillInfo(char* workoutName)
+{
+	outputFile << 
+		'"' << workoutName << '"' << "," << 
+		totalTime/60.0 << "," << 
+		(int)totalWork << "," << 
+		(int)averagePower << "," << 
+		(int)normalizedPower << "," << 
+		intensityFactor << "," << 
+		variabilityIndex << "," << 
+		(int)trainingStressScore << '\n' ;
 }
 
 void workoutData::calculateNP()
@@ -93,6 +132,10 @@ void workoutData::calculateTotalTime(workoutInfo& data)
 
 void workoutData::generatePowerArray(workoutInfo& data)
 {
+	if (powerBySecond)
+	{
+		delete[] powerBySecond;
+	}
 	powerBySecond = new unsigned int[totalTime];
 	unsigned int currentWorkoutTime = 0;
 
