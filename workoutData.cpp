@@ -51,20 +51,20 @@ void workoutData::closeFile()
 
 void workoutData::fillHeader()
 {
-	outputFile << "Name,Time(min),Work(kJ),AvgP(W),NP(W),IF,VI,TSS\n";
+	outputFile << "Name,IF,TSS,NP(W),Time(min),Work(kJ),AvgP(W),VI\n";
 }
 
 void workoutData::fillInfo(char* workoutName)
 {
-	outputFile << 
-		'"' << workoutName << '"' << "," << 
-		totalTime/60.0 << "," << 
-		(int)totalWork << "," << 
-		(int)averagePower << "," << 
-		(int)normalizedPower << "," << 
-		intensityFactor << "," << 
-		variabilityIndex << "," << 
-		(int)trainingStressScore << '\n' ;
+	outputFile 
+		<< '"' << workoutName << '"' 
+		<< "," << intensityFactor 
+		<< "," << (int)trainingStressScore 
+		<< "," << (int)normalizedPower 
+		<< "," << totalTime/60.0 
+		<< "," << (int)totalWork 
+		<< "," << (int)averagePower 
+		<< "," << variabilityIndex << '\n' ;
 }
 
 void workoutData::calculateNP()
