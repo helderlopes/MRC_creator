@@ -143,7 +143,17 @@ void workoutData::generatePowerArray(workoutInfo& data)
 	{
 		for (unsigned int j = 0; j < (unsigned int)(data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS); j++)
 		{
-			powerBySecond[currentWorkoutTime + j] = (unsigned int) (data.workoutFTPValues[i][INITIALFTP] * FTP / ONE_CENTURY);
+			if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
+			{
+				powerBySecond[currentWorkoutTime + j] = (unsigned int)(data.workoutFTPValues[i][INITIALFTP] * FTP / ONE_CENTURY);
+			}
+			else 
+			{
+				int diff = (data.workoutFTPValues[i][FINALFTP] - data.workoutFTPValues[i][INITIALFTP]);
+				double ramp = ((j + 1.0) / (data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS));
+				int rampRate = (int)(diff * ramp);
+				powerBySecond[currentWorkoutTime + j] = (unsigned int)((data.workoutFTPValues[i][INITIALFTP] + rampRate) * FTP / ONE_CENTURY);
+			}
 		}
 		currentWorkoutTime += (unsigned int)(data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS);
 	}
