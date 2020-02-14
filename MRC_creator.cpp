@@ -10,6 +10,9 @@
 #include "workoutData.h"
 #pragma comment(lib, "User32.lib")
 
+#define FTP 225
+#define POWER_RANGE 10
+
 void listFilesOfCurDir(HANDLE &handle, WIN32_FIND_DATA &ffd)
 {
 	wchar_t curDir[_MAX_PATH];
@@ -48,7 +51,7 @@ int main()
 {
 	WIN32_FIND_DATA ffd;
 	HANDLE hFind;
-	workoutData workoutData;
+	workoutData workoutData(FTP);
 	workoutData.createFile((char*)"workoutsInfo.csv");
 	
 	listFilesOfCurDir(hFind, ffd);
@@ -70,7 +73,7 @@ int main()
 			write.closeFile();
 
 			strcpy(&fileName[strlen(fileName) - SIZE_OF_FILE_EXTENSION], ".fit");
-			writeFIT writeFIT;
+			writeFIT writeFIT(FTP, POWER_RANGE);
 			writeFIT.createFile(fileName);
 			writeFIT.fillFile(read.data);
 			write.closeFile();

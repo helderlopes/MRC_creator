@@ -10,10 +10,12 @@ std::wstring s2ws(const std::string& str)
 	return wstrTo;
 }
 
-writeFIT::writeFIT()
+writeFIT::writeFIT(unsigned int functionalThresholdPower, unsigned int powerRange)
 	: encode(fit::ProtocolVersion::V10)
 {
 	memset(outputFileName, NULL, sizeof(outputFileName));
+	functionalThresholdPower = functionalThresholdPower;
+	powerRange = powerRange;
 }
 
 writeFIT::~writeFIT()
@@ -98,9 +100,9 @@ void writeFIT::fillWorkoutStep(workoutInfo& data)
 		workoutStepMesg.SetTargetValue(0);
 		if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
 		{
-			FIT_UINT32 value = FIT_UINT32(data.workoutFTPValues[i][INITIALFTP] * 0.01 * FTP);
-			workoutStepMesg.SetCustomTargetValueLow(value + VALUE_TO_ADD_ON_TARGET_POWER - POWER_OFFSET); //always add 1000 to target power
-			workoutStepMesg.SetCustomTargetValueHigh(value + VALUE_TO_ADD_ON_TARGET_POWER + POWER_OFFSET);
+			FIT_UINT32 value = FIT_UINT32(data.workoutFTPValues[i][INITIALFTP] * 0.01 * functionalThresholdPower);
+			workoutStepMesg.SetCustomTargetValueLow(value + VALUE_TO_ADD_ON_TARGET_POWER - powerRange); //always add 1000 to target power
+			workoutStepMesg.SetCustomTargetValueHigh(value + VALUE_TO_ADD_ON_TARGET_POWER + powerRange);
 		}
 		else
 		{
@@ -115,10 +117,10 @@ void writeFIT::fillWorkoutStep(workoutInfo& data)
 				minValue = data.workoutFTPValues[i][FINALFTP];
 				maxValue = data.workoutFTPValues[i][INITIALFTP];
 			}
-			FIT_UINT32 value = FIT_UINT32(minValue * 0.01 * FTP);
+			FIT_UINT32 value = FIT_UINT32(minValue * 0.01 * functionalThresholdPower);
 			workoutStepMesg.SetCustomTargetValueLow(value + VALUE_TO_ADD_ON_TARGET_POWER); //always add 1000 to target power
 
-			value = FIT_UINT32(maxValue * 0.01 * FTP);
+			value = FIT_UINT32(maxValue * 0.01 * functionalThresholdPower);
 			workoutStepMesg.SetCustomTargetValueHigh(value + VALUE_TO_ADD_ON_TARGET_POWER);
 		}
 		workoutStepMesg.SetMessageIndex(i); //incremental (number of step, from 0 to n-1)

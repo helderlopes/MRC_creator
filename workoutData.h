@@ -11,7 +11,7 @@
 class workoutData
 {
 public:
-	workoutData();
+	workoutData(unsigned int functionalThresholdPower);
 	~workoutData();
 	void writeWorkoutData(workoutInfo& data, char* workoutName);
 	void createFile(char* fileName);
@@ -29,6 +29,7 @@ private:
 	void calculateTotalTime(workoutInfo& data);
 	void generatePowerArray(workoutInfo& data);
 
+	unsigned int functionalThresholdPower;
 	float normalizedPower; //NP in Watts
 	float intensityFactor; //IF
 	float trainingStressScore; //TSS 

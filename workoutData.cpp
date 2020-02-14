@@ -1,12 +1,13 @@
 #include "workoutData.h"
 #include <math.h>
 
-workoutData::workoutData()
+workoutData::workoutData(unsigned int functionalThresholdPower)
 {
 	memset(outputFileName, NULL, sizeof(outputFileName));
 	totalTime = 0;
 	normalizedPower = averagePower = totalWork = intensityFactor = trainingStressScore = variabilityIndex = 0.0;
 	powerBySecond = NULL;
+	functionalThresholdPower = functionalThresholdPower;
 }
 
 workoutData::~workoutData()
@@ -88,7 +89,7 @@ void workoutData::calculateNP()
 
 void workoutData::calculateIF()
 {
-	intensityFactor = (normalizedPower / FTP);
+	intensityFactor = (normalizedPower / functionalThresholdPower);
 }
 
 void workoutData::calculateTSS()
@@ -145,14 +146,14 @@ void workoutData::generatePowerArray(workoutInfo& data)
 		{
 			if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
 			{
-				powerBySecond[currentWorkoutTime + j] = (unsigned int)(data.workoutFTPValues[i][INITIALFTP] * FTP / ONE_CENTURY);
+				powerBySecond[currentWorkoutTime + j] = (unsigned int)(data.workoutFTPValues[i][INITIALFTP] * functionalThresholdPower / ONE_CENTURY);
 			}
 			else 
 			{
 				int diff = (data.workoutFTPValues[i][FINALFTP] - data.workoutFTPValues[i][INITIALFTP]);
 				double ramp = ((j + 1.0) / (data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS));
 				int rampRate = (int)(diff * ramp);
-				powerBySecond[currentWorkoutTime + j] = (unsigned int)((data.workoutFTPValues[i][INITIALFTP] + rampRate) * FTP / ONE_CENTURY);
+				powerBySecond[currentWorkoutTime + j] = (unsigned int)((data.workoutFTPValues[i][INITIALFTP] + rampRate) * functionalThresholdPower / ONE_CENTURY);
 			}
 		}
 		currentWorkoutTime += (unsigned int)(data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS);
