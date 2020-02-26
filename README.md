@@ -15,7 +15,7 @@ Indoor cycling workout creator. It generates a .mrc and a .fit file from an spec
 - Use .fit files on your Garmin device (if it accepts .fit file workouts). Just plug your device on computer and paste the file on the Workotus folder.
 
 ## Input File Format
-The input file have the same format as the one used in [ERGdb](https://ergdb.org/) 
+The input file have the same format as the one used in [TrainderDay](https://trainerday.com/) 
 
 You can even copy/paste your workouts from ergdb to a .txt (it work backwards too).
 
