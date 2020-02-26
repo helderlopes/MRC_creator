@@ -76,7 +76,7 @@ int main()
 			writeFIT writeFIT(FTP, POWER_RANGE);
 			writeFIT.createFile(fileName);
 			writeFIT.fillFile(read.data);
-			write.closeFile();
+			writeFIT.closeFile();
 
 			fileName[strlen(fileName) - SIZE_OF_FILE_EXTENSION] = '\0';
 			workoutData.writeWorkoutData(read.data, fileName);
