@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{D7ECDD1C-DC5E-47D3-92D4-89ACD7D5760B}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{FF028E0C-5D5B-4EF6-9B86-A204B02A30C4}</ProjectGuid>
+    <Keyword>MFCProj</Keyword>
     <RootNamespace>MRCcreator</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -31,6 +31,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -38,12 +39,14 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -51,6 +54,7 @@
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -84,109 +88,110 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalUsingDirectories>
+      </AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>garminfitsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>uafxcwd.lib;Libcmtd.lib</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>uafxcwd.lib;Libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
     </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>garminfitsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>uafxcw.lib;Libcmt.lib</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>uafxcw.lib;Libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="garminfitsdk\fit.cpp" />
-    <ClCompile Include="garminfitsdk\fit_accumulated_field.cpp" />
-    <ClCompile Include="garminfitsdk\fit_accumulator.cpp" />
-    <ClCompile Include="garminfitsdk\fit_buffered_mesg_broadcaster.cpp" />
-    <ClCompile Include="garminfitsdk\fit_buffered_record_mesg_broadcaster.cpp" />
-    <ClCompile Include="garminfitsdk\fit_buffer_encode.cpp" />
-    <ClCompile Include="garminfitsdk\fit_crc.cpp" />
-    <ClCompile Include="garminfitsdk\fit_date_time.cpp" />
-    <ClCompile Include="garminfitsdk\fit_decode.cpp" />
-    <ClCompile Include="garminfitsdk\fit_developer_field.cpp" />
-    <ClCompile Include="garminfitsdk\fit_developer_field_definition.cpp" />
-    <ClCompile Include="garminfitsdk\fit_developer_field_description.cpp" />
-    <ClCompile Include="garminfitsdk\fit_encode.cpp" />
-    <ClCompile Include="garminfitsdk\fit_factory.cpp" />
-    <ClCompile Include="garminfitsdk\fit_field.cpp" />
-    <ClCompile Include="garminfitsdk\fit_field_base.cpp" />
-    <ClCompile Include="garminfitsdk\fit_field_definition.cpp" />
-    <ClCompile Include="garminfitsdk\fit_mesg.cpp" />
-    <ClCompile Include="garminfitsdk\fit_mesg_broadcaster.cpp" />
-    <ClCompile Include="garminfitsdk\fit_mesg_definition.cpp" />
-    <ClCompile Include="garminfitsdk\fit_mesg_with_event_broadcaster.cpp" />
-    <ClCompile Include="garminfitsdk\fit_profile.cpp" />
-    <ClCompile Include="garminfitsdk\fit_protocol_validator.cpp" />
-    <ClCompile Include="garminfitsdk\fit_unicode.cpp" />
-    <ClCompile Include="MRC_creator.cpp" />
-    <ClCompile Include="readFile.cpp" />
-    <ClCompile Include="workoutData.cpp" />
-    <ClCompile Include="writeFIT.cpp">
-      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Helder\Documents\MRC_creator\garminfitsdk\c;C:\Users\Helder\Documents\MRC_creator\garminfitsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
-    <ClCompile Include="writeMRC.cpp" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="framework.h" />
     <ClInclude Include="garminfitsdk\fit.hpp" />
     <ClInclude Include="garminfitsdk\FitDecode.h" />
     <ClInclude Include="garminfitsdk\FitDeveloperField.h" />
@@ -226,6 +231,8 @@
     <ClInclude Include="garminfitsdk\fit_camera_event_mesg_listener.hpp" />
     <ClInclude Include="garminfitsdk\fit_capabilities_mesg.hpp" />
     <ClInclude Include="garminfitsdk\fit_capabilities_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_climb_pro_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_climb_pro_mesg_listener.hpp" />
     <ClInclude Include="garminfitsdk\fit_config.hpp" />
     <ClInclude Include="garminfitsdk\fit_connectivity_mesg.hpp" />
     <ClInclude Include="garminfitsdk\fit_connectivity_mesg_listener.hpp" />
@@ -293,6 +300,8 @@
     <ClInclude Include="garminfitsdk\fit_hr_mesg_listener.hpp" />
     <ClInclude Include="garminfitsdk\fit_hr_zone_mesg.hpp" />
     <ClInclude Include="garminfitsdk\fit_hr_zone_mesg_listener.hpp" />
+    <ClInclude Include="garminfitsdk\fit_jump_mesg.hpp" />
+    <ClInclude Include="garminfitsdk\fit_jump_mesg_listener.hpp" />
     <ClInclude Include="garminfitsdk\fit_lap_mesg.hpp" />
     <ClInclude Include="garminfitsdk\fit_lap_mesg_listener.hpp" />
     <ClInclude Include="garminfitsdk\fit_length_mesg.hpp" />
@@ -400,10 +409,56 @@
     <ClInclude Include="garminfitsdk\fit_workout_step_mesg_listener.hpp" />
     <ClInclude Include="garminfitsdk\fit_zones_target_mesg.hpp" />
     <ClInclude Include="garminfitsdk\fit_zones_target_mesg_listener.hpp" />
+    <ClInclude Include="MRC_creator.h" />
+    <ClInclude Include="MRC_creatorDlg.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="readFile.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="targetver.h" />
     <ClInclude Include="workoutData.h" />
     <ClInclude Include="writeFIT.h" />
     <ClInclude Include="writeMRC.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="garminfitsdk\fit.cpp" />
+    <ClCompile Include="garminfitsdk\fit_accumulated_field.cpp" />
+    <ClCompile Include="garminfitsdk\fit_accumulator.cpp" />
+    <ClCompile Include="garminfitsdk\fit_buffered_mesg_broadcaster.cpp" />
+    <ClCompile Include="garminfitsdk\fit_buffered_record_mesg_broadcaster.cpp" />
+    <ClCompile Include="garminfitsdk\fit_buffer_encode.cpp" />
+    <ClCompile Include="garminfitsdk\fit_crc.cpp" />
+    <ClCompile Include="garminfitsdk\fit_date_time.cpp" />
+    <ClCompile Include="garminfitsdk\fit_decode.cpp" />
+    <ClCompile Include="garminfitsdk\fit_developer_field.cpp" />
+    <ClCompile Include="garminfitsdk\fit_developer_field_definition.cpp" />
+    <ClCompile Include="garminfitsdk\fit_developer_field_description.cpp" />
+    <ClCompile Include="garminfitsdk\fit_encode.cpp" />
+    <ClCompile Include="garminfitsdk\fit_factory.cpp" />
+    <ClCompile Include="garminfitsdk\fit_field.cpp" />
+    <ClCompile Include="garminfitsdk\fit_field_base.cpp" />
+    <ClCompile Include="garminfitsdk\fit_field_definition.cpp" />
+    <ClCompile Include="garminfitsdk\fit_mesg.cpp" />
+    <ClCompile Include="garminfitsdk\fit_mesg_broadcaster.cpp" />
+    <ClCompile Include="garminfitsdk\fit_mesg_definition.cpp" />
+    <ClCompile Include="garminfitsdk\fit_mesg_with_event_broadcaster.cpp" />
+    <ClCompile Include="garminfitsdk\fit_profile.cpp" />
+    <ClCompile Include="garminfitsdk\fit_protocol_validator.cpp" />
+    <ClCompile Include="garminfitsdk\fit_unicode.cpp" />
+    <ClCompile Include="MRC_creator.cpp" />
+    <ClCompile Include="MRC_creatorDlg.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="readFile.cpp" />
+    <ClCompile Include="workoutData.cpp" />
+    <ClCompile Include="writeFIT.cpp" />
+    <ClCompile Include="writeMRC.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MRCcreator.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="garminfitsdk\FitDecode.mm" />
@@ -413,7 +468,10 @@
     <None Include="garminfitsdk\FitFieldDefinition.mm" />
     <None Include="garminfitsdk\FitMesg.mm" />
     <None Include="garminfitsdk\FitMesgDefinition.mm" />
-    <None Include="README.md" />
+    <None Include="res\MRCcreator.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MRC_creator.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,7 @@
 #include "writeFIT.h"
 #include "Windows.h"
 #include <functional>
+#include "shlwapi.h"
 
 std::wstring s2ws(const std::string& str)
 {
@@ -81,7 +82,9 @@ void writeFIT::fillWorkout(FIT_UINT16 numValidSteps)
 {
 	fit::WorkoutMesg workoutMesg;
 	char workoutName[_MAX_PATH];
-	strcpy(workoutName, outputFileName);
+	string fileName = outputFileName;
+	fileName = fileName.substr(fileName.find_last_of("/\\") + 1);
+	strcpy(workoutName, fileName.c_str());
 	workoutName[strlen(workoutName) - SIZE_OF_FILE_EXTENSION] = '\0';
 
 	workoutMesg.SetCapabilities(FIT_WORKOUT_CAPABILITIES_TCX);
