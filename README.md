@@ -2,22 +2,26 @@
 Indoor cycling workout creator. It generates a .mrc and a .fit file from an specific text input file. 
 
 ## How to use it
-- Open WriteFIT.h and change your FTP value (it's hardcoded yet). 
+- Execute MRC_creator.exe
 
-- Compile it with Visual Studio (some few windows libraries were used to list current directory files).
+- Select the folder with the .txt workouts.
 
-- Put all your .txt workout files in the same folder as the .exe generated.
+- Insert your FTP (default: 200W)
 
-- Run .exe to generate the outputs (.mrc and .fit files).
+- Insert the power offset that will be shown on your Garmin head unit.
 
-- Use .mrc files on GoldenCheetah (it already come with laps between steps) or another software that accepts it (like TrainerRoad).
+- Set Checkboxes for the outputs that you want. OBS: FIT for ANT+ FE-C is used if you want to use your garmin head unit to control an interactive trainer (this option will set the power offset to zero).
 
-- Use .fit files on your Garmin device (if it accepts .fit file workouts). Just plug your device on computer and paste the file on the Workotus folder.
+- Click Generate! PS: You just need to configure it once. Afterwards, everything is saved on your windows registry. 
+
+- Use .mrc files on GoldenCheetah (it already come with laps between steps), or another software that accepts it (like TrainerRoad).
+
+- Use .fit files on your Garmin device (if it accepts .fit file workouts). Just plug your device on computer and paste the .fit file on the Newfiles folder.
 
 ## Input File Format
-The input file have the same format as the one used in [ERGdb](https://ergdb.org/) 
+The input file have the same format as the one used in [TrainderDay](https://trainerday.com/) 
 
-You can even copy/paste your workouts from ergdb to a .txt (it work backwards too).
+You can even copy/paste your workouts from TrainerDay to a .txt (it work backwards too).
 
 The format is simple. It consists of two or three (optional) values per line.
 
