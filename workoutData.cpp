@@ -7,7 +7,7 @@ workoutData::workoutData(unsigned int functionalThresholdPower)
 	totalTime = 0;
 	normalizedPower = averagePower = totalWork = intensityFactor = trainingStressScore = variabilityIndex = 0.0;
 	powerBySecond = NULL;
-	functionalThresholdPower = functionalThresholdPower;
+	this->functionalThresholdPower = functionalThresholdPower;
 }
 
 workoutData::~workoutData()
