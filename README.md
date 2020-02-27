@@ -21,7 +21,7 @@ Indoor cycling workout creator. It generates a .mrc and a .fit file from an spec
 ## Input File Format
 The input file have the same format as the one used in [TrainderDay](https://trainerday.com/) 
 
-You can even copy/paste your workouts from ergdb to a .txt (it work backwards too).
+You can even copy/paste your workouts from TrainerDay to a .txt (it work backwards too).
 
 The format is simple. It consists of two or three (optional) values per line.
 
