@@ -8,7 +8,7 @@ Indoor cycling workout creator. It generates a .mrc and a .fit file from an spec
 
 - Insert your FTP (default: 200W)
 
-- Insert the power offset that will be shown on your Garmin head unit.
+- Insert the power offset that will be shown on your Garmin head unit (this is the limit between the power target. e.g. a 10W power offset will generate an interval with limits from X-10 to X10 Watts).
 
 - Set Checkboxes for the outputs that you want. OBS: FIT for ANT+ FE-C is used if you want to use your garmin head unit to control an interactive trainer (this option will set the power offset to zero).
 
