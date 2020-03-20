@@ -15,8 +15,8 @@ writeFIT::writeFIT(unsigned int functionalThresholdPower, unsigned int powerRang
 	: encode(fit::ProtocolVersion::V10)
 {
 	memset(outputFileName, NULL, sizeof(outputFileName));
-	functionalThresholdPower = functionalThresholdPower;
-	powerRange = powerRange;
+	this->functionalThresholdPower = functionalThresholdPower;
+	this->powerRange = powerRange;
 }
 
 writeFIT::~writeFIT()
