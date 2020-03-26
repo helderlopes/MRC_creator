@@ -14,9 +14,11 @@ Indoor cycling workout creator. It generates a .mrc and a .fit file from an spec
 
 - Click Generate! PS: You just need to configure it once. Afterwards, everything is saved on your windows registry. 
 
-- Use .mrc files on GoldenCheetah (it already come with laps between steps), or another software that accepts it (like TrainerRoad).
+- Use .mrc (it already come with laps between steps) and/or .erg files on GoldenCheetah, or another software that accepts it (e.g. TrainerRoad).
 
 - Use .fit files on your Garmin device (if it accepts .fit file workouts). Just plug your device on computer and paste the .fit file on the Newfiles folder.
+
+- Use .zwo files on Zwift. To do the workout, drag the .zwo file into the Zwift workouts directory (\Documents\Zwift\Workouts\)
 
 ## Input File Format
 The input file have the same format as the one used in [TrainderDay](https://trainerday.com/) 
@@ -50,6 +52,8 @@ The other steps have just one FTP Target.
 
 ## Output Files Description and Documentation
 
-[MRC File description](https://support.trainerroad.com/hc/en-us/articles/201944204-Creating-a-Workout-from-an-ERG-or-MRC-File)
+[MRC and ERG File description](https://support.trainerroad.com/hc/en-us/articles/201944204-Creating-a-Workout-from-an-ERG-or-MRC-File)
 
 [FIT File description and SDK](https://www.thisisant.com/resources/fit)
+
+[ZWO File description](https://github.com/h4l/zwift-workout-file-reference/blob/master/zwift_workout_file_tag_reference.md)
