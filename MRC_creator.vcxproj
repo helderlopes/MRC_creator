@@ -416,6 +416,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="workoutData.h" />
+    <ClInclude Include="writeERG.h" />
     <ClInclude Include="writeFIT.h" />
     <ClInclude Include="writeMRC.h" />
   </ItemGroup>
@@ -454,6 +455,7 @@
     </ClCompile>
     <ClCompile Include="readFile.cpp" />
     <ClCompile Include="workoutData.cpp" />
+    <ClCompile Include="writeERG.cpp" />
     <ClCompile Include="writeFIT.cpp" />
     <ClCompile Include="writeMRC.cpp" />
   </ItemGroup>

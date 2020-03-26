@@ -699,6 +699,9 @@
     <ClInclude Include="garminfitsdk\FitMesgDefinition.h">
       <Filter>garminfitsdk</Filter>
     </ClInclude>
+    <ClInclude Include="writeERG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MRC_creator.cpp">
@@ -793,6 +796,9 @@
     </ClCompile>
     <ClCompile Include="garminfitsdk\fit_unicode.cpp">
       <Filter>garminfitsdk</Filter>
+    </ClCompile>
+    <ClCompile Include="writeERG.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

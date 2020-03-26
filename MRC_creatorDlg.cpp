@@ -12,6 +12,7 @@
 
 #include "readFile.h"
 #include "writeMRC.h"
+#include "writeERG.h"
 #include "writeFIT.h"
 #include "workoutData.h"
 
@@ -51,6 +52,7 @@ void CMRCcreatorDlg::ReadRegistry()
 	const CString REG_KEY_FTP = _T("FTP");
 	const CString REG_KEY_OFFSET = _T("Offset");
 	const CString REG_KEY_MRC = _T("MRC");
+	const CString REG_KEY_ERG = _T("ERG");
 	const CString REG_KEY_FIT = _T("FIT");
 	const CString REG_KEY_ANTFEC = _T("ANT+ FE-C");
 	const CString REG_KEY_WORKOUTDATA = _T("Workout Data");
@@ -92,6 +94,10 @@ void CMRCcreatorDlg::ReadRegistry()
 	CButton* button = (CButton*)GetDlgItem(IDC_MRC);
 	button->SetCheck(dwValue);
 
+	lRet = regKey.QueryDWORDValue(REG_KEY_ERG, dwValue);
+	button = (CButton*)GetDlgItem(IDC_ERG);
+	button->SetCheck(dwValue);
+
 	lRet = regKey.QueryDWORDValue(REG_KEY_FIT, dwValue);
 	button = (CButton*)GetDlgItem(IDC_FIT);
 	button->SetCheck(dwValue);
@@ -114,6 +120,7 @@ void CMRCcreatorDlg::WriteRegistry()
 	const CString REG_KEY_FTP = _T("FTP");
 	const CString REG_KEY_OFFSET = _T("Offset");
 	const CString REG_KEY_MRC = _T("MRC");
+	const CString REG_KEY_ERG = _T("ERG");
 	const CString REG_KEY_FIT = _T("FIT");
 	const CString REG_KEY_ANTFEC = _T("ANT+ FE-C");
 	const CString REG_KEY_WORKOUTDATA = _T("Workout Data");
@@ -147,6 +154,10 @@ void CMRCcreatorDlg::WriteRegistry()
 	CButton* button = (CButton*)GetDlgItem(IDC_MRC);
 	dwValue = button->GetCheck();
 	lRet = regKey.SetDWORDValue(REG_KEY_MRC, dwValue);
+
+	button = (CButton*)GetDlgItem(IDC_ERG);
+	dwValue = button->GetCheck();
+	lRet = regKey.SetDWORDValue(REG_KEY_ERG, dwValue);
 
 	button = (CButton*)GetDlgItem(IDC_FIT);
 	dwValue = button->GetCheck();
@@ -293,12 +304,17 @@ bool hasNextFile(HANDLE& handle, WIN32_FIND_DATA& ffd)
 void CMRCcreatorDlg::OnBnClickedGenerate()
 {
 	// TODO: Add your control notification handler code here
-	bool generateMRC, generateFIT, generateFEC, generateInfo;
-	generateMRC = generateFIT = generateFEC = generateInfo = false;
+	bool generateMRC, generateERG, generateFIT, generateFEC, generateInfo;
+	generateMRC = generateERG = generateFIT = generateFEC = generateInfo = false;
 	CButton* button = (CButton*)GetDlgItem(IDC_MRC);
 	if (button->GetCheck())
 	{
 		generateMRC = true;
+	}
+	button = (CButton*)GetDlgItem(IDC_ERG);
+	if (button->GetCheck())
+	{
+		generateERG = true;
 	}
 	button = (CButton*)GetDlgItem(IDC_FIT);
 	if (button->GetCheck())
@@ -363,6 +379,15 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 				writeMRC.createFile(completeFilePath);
 				writeMRC.fillFile(read.data);
 				writeMRC.closeFile();
+			}
+
+			if (generateERG)
+			{
+				strcpy(&completeFilePath[strlen(completeFilePath) - SIZE_OF_FILE_EXTENSION], ".erg");
+				writeERG writeERG(ftp);
+				writeERG.createFile(completeFilePath);
+				writeERG.fillFile(read.data);
+				writeERG.closeFile();
 			}
 
 			if (generateFIT)
