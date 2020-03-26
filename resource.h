@@ -14,7 +14,6 @@
 #define IDC_NO_OFFSET                   1006
 #define IDC_INFO                        1007
 #define ID_GENERATE                     1008
-#define IDC_CHECK1                      1009
 #define IDC_ERG                         1009
 
 // Next default values for new objects
