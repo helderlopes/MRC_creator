@@ -48,10 +48,9 @@ void writeERG::fillCourse(workoutInfo& data)
 
 	for (unsigned int i = 0; i < data.numberOfSteps; i++)
 	{
-		outputFile << workoutTotalTime << " " << (data.workoutFTPValues[i][INITIALFTP] * functionalThresholdPower / 100.0) << '\n';
-		workoutTotalTime += data.workoutTimeValue[i];											//course data format:	initial time	initial ftp value
-		//outputFile << workoutTotalTime << " LAP\n";												//						final time		LAP
-		outputFile << workoutTotalTime << " " << (data.workoutFTPValues[i][FINALFTP] * functionalThresholdPower / 100.0) << '\n';	//						final time		final ftp value
+		outputFile << workoutTotalTime << " " << (data.workoutFTPValues[i][INITIALFTP] * functionalThresholdPower / 100) << '\n';
+		workoutTotalTime += data.workoutTimeValue[i];																			//course data format:	initial time	initial ftp value
+		outputFile << workoutTotalTime << " " << (data.workoutFTPValues[i][FINALFTP] * functionalThresholdPower / 100) << '\n';	//						final time		final ftp value
 
 	}
 
