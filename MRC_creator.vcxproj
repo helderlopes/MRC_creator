@@ -419,6 +419,7 @@
     <ClInclude Include="writeERG.h" />
     <ClInclude Include="writeFIT.h" />
     <ClInclude Include="writeMRC.h" />
+    <ClInclude Include="writeZWO.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="garminfitsdk\fit.cpp" />
@@ -458,6 +459,7 @@
     <ClCompile Include="writeERG.cpp" />
     <ClCompile Include="writeFIT.cpp" />
     <ClCompile Include="writeMRC.cpp" />
+    <ClCompile Include="writeZWO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MRCcreator.rc" />

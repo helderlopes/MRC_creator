@@ -14,6 +14,7 @@
 #include "writeMRC.h"
 #include "writeERG.h"
 #include "writeFIT.h"
+#include "writeZWO.h"
 #include "workoutData.h"
 
 #ifdef _DEBUG
@@ -54,6 +55,7 @@ void CMRCcreatorDlg::ReadRegistry()
 	const CString REG_KEY_MRC = _T("MRC");
 	const CString REG_KEY_ERG = _T("ERG");
 	const CString REG_KEY_FIT = _T("FIT");
+	const CString REG_KEY_ZWO= _T("ZWO");
 	const CString REG_KEY_ANTFEC = _T("ANT+ FE-C");
 	const CString REG_KEY_WORKOUTDATA = _T("Workout Data");
 
@@ -102,6 +104,10 @@ void CMRCcreatorDlg::ReadRegistry()
 	button = (CButton*)GetDlgItem(IDC_FIT);
 	button->SetCheck(dwValue);
 
+	lRet = regKey.QueryDWORDValue(REG_KEY_ZWO, dwValue);
+	button = (CButton*)GetDlgItem(IDC_ZWO);
+	button->SetCheck(dwValue);
+
 	lRet = regKey.QueryDWORDValue(REG_KEY_ANTFEC, dwValue);
 	button = (CButton*)GetDlgItem(IDC_NO_OFFSET);
 	button->SetCheck(dwValue);
@@ -122,6 +128,7 @@ void CMRCcreatorDlg::WriteRegistry()
 	const CString REG_KEY_MRC = _T("MRC");
 	const CString REG_KEY_ERG = _T("ERG");
 	const CString REG_KEY_FIT = _T("FIT");
+	const CString REG_KEY_ZWO = _T("ZWO");
 	const CString REG_KEY_ANTFEC = _T("ANT+ FE-C");
 	const CString REG_KEY_WORKOUTDATA = _T("Workout Data");
 
@@ -162,6 +169,10 @@ void CMRCcreatorDlg::WriteRegistry()
 	button = (CButton*)GetDlgItem(IDC_FIT);
 	dwValue = button->GetCheck();
 	lRet = regKey.SetDWORDValue(REG_KEY_FIT, dwValue);
+
+	button = (CButton*)GetDlgItem(IDC_ZWO);
+	dwValue = button->GetCheck();
+	lRet = regKey.SetDWORDValue(REG_KEY_ZWO, dwValue);
 
 	button = (CButton*)GetDlgItem(IDC_NO_OFFSET);
 	dwValue = button->GetCheck();
@@ -304,8 +315,8 @@ bool hasNextFile(HANDLE& handle, WIN32_FIND_DATA& ffd)
 void CMRCcreatorDlg::OnBnClickedGenerate()
 {
 	// TODO: Add your control notification handler code here
-	bool generateMRC, generateERG, generateFIT, generateFEC, generateInfo;
-	generateMRC = generateERG = generateFIT = generateFEC = generateInfo = false;
+	bool generateMRC, generateERG, generateFIT, generateZWO, generateFEC, generateInfo;
+	generateMRC = generateERG = generateFIT = generateZWO = generateFEC = generateInfo = false;
 	CButton* button = (CButton*)GetDlgItem(IDC_MRC);
 	if (button->GetCheck())
 	{
@@ -320,6 +331,11 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 	if (button->GetCheck())
 	{
 		generateFIT = true;
+	}
+	button = (CButton*)GetDlgItem(IDC_ZWO);
+	if (button->GetCheck())
+	{
+		generateZWO = true;
 	}
 	button = (CButton*)GetDlgItem(IDC_NO_OFFSET);
 	if (button->GetCheck())
@@ -397,6 +413,15 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 				writeFIT.createFile(completeFilePath);
 				writeFIT.fillFile(read.data);
 				writeFIT.closeFile();
+			}
+
+			if (generateZWO)
+			{
+				strcpy(&completeFilePath[strlen(completeFilePath) - SIZE_OF_FILE_EXTENSION], ".zwo");
+				writeZWO writeZWO;
+				writeZWO.createFile(completeFilePath);
+				writeZWO.fillFile(read.data);
+				writeZWO.closeFile();
 			}
 
 			if (generateInfo)

@@ -702,6 +702,9 @@
     <ClInclude Include="writeERG.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="writeZWO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MRC_creator.cpp">
@@ -798,6 +801,9 @@
       <Filter>garminfitsdk</Filter>
     </ClCompile>
     <ClCompile Include="writeERG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="writeZWO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
