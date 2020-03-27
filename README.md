@@ -8,7 +8,7 @@ Indoor cycling workout creator. It generates a .mrc and a .fit file from an spec
 
 - Insert your FTP (default: 200W)
 
-- Insert the power offset that will be shown on your Garmin head unit (this is the limit between the power target. e.g. a 10W power offset will generate an interval with limits from X-10 to X10 Watts).
+- Insert the power offset that will be shown on your Garmin head unit (this is the limit between the power target. e.g. a 10W power offset will generate an interval with limits from X-10 to X+10 Watts).
 
 - Set Checkboxes for the outputs that you want. OBS: FIT for ANT+ FE-C is used if you want to use your garmin head unit to control an interactive trainer (this option will set the power offset to zero).
 
@@ -18,7 +18,9 @@ Indoor cycling workout creator. It generates a .mrc and a .fit file from an spec
 
 - Use .fit files on your Garmin device (if it accepts .fit file workouts). Just plug your device on computer and paste the .fit file on the Newfiles folder.
 
-- Use .zwo files on Zwift. To do the workout, drag the .zwo file into the Zwift workouts directory (\Documents\Zwift\Workouts\)
+- Use .zwo files on Zwift. To do the workout, drag the .zwo file into the Zwift workouts directory (\Documents\Zwift\Workouts\).
+
+- The software also creates a .csv with all workout data relative to power (NP, TSS, IF, work, avgPower, etc).
 
 ## Input File Format
 The input file have the same format as the one used in [TrainderDay](https://trainerday.com/) 
