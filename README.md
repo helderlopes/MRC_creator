@@ -56,6 +56,6 @@ The other steps have just one FTP Target.
 
 [MRC and ERG File description](https://support.trainerroad.com/hc/en-us/articles/201944204-Creating-a-Workout-from-an-ERG-or-MRC-File)
 
-[FIT File description and SDK](https://www.thisisant.com/resources/fit-sdk-beta/)
+[FIT File description and SDK](https://www.thisisant.com/resources/fit-sdk/)
 
 [ZWO File description](https://github.com/h4l/zwift-workout-file-reference/blob/master/zwift_workout_file_tag_reference.md)
