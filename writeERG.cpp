@@ -6,35 +6,13 @@ writeERG::writeERG(unsigned int functionalThresholdPower)
 	this->functionalThresholdPower = functionalThresholdPower;
 }
 
-writeERG::~writeERG()
-{
-	if (outputFile.is_open())
-	{
-		outputFile.close();
-	}
-}
-
-void writeERG::createFile(char* fileName)
-{
-	strcpy(outputFileName, fileName);
-	outputFile.open(outputFileName);
-}
-
-void writeERG::closeFile()
-{
-	if (outputFile.is_open())
-	{
-		outputFile.close();
-	}
-}
-
 void writeERG::fillHeader()
 {
 	outputFile << "[COURSE HEADER]\n";
 	outputFile << "VERSION = 2\n";
 	outputFile << "UNITS = ENGLISH\n";
 	outputFile << "DESCRIPTION = A description\n";
-	outputFile << "FILE NAME = " << outputFileName << "\n";
+	outputFile << "FILE NAME = " << removeFilePathAndExtension(outputFileName) << "\n";
 	outputFile << "FTP = " << functionalThresholdPower << "\n";
 	outputFile << "MINUTES WATTS\n";
 	outputFile << "[END COURSE HEADER]\n";

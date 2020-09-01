@@ -1,13 +1,10 @@
 #pragma once
-#include "readFile.h"
+#include "writeGeneric.h"
 
-class writeERG
+class writeERG : public writeGeneric
 {
 public:
 	writeERG(unsigned int functionalThresholdPower);
-	~writeERG();
-	void createFile(char* fileName);
-	void closeFile();
 	void fillFile(workoutInfo& data);
 
 private:
@@ -15,6 +12,4 @@ private:
 	void fillCourse(workoutInfo& data);
 
 	unsigned int functionalThresholdPower;
-	ofstream outputFile;
-	char outputFileName[_MAX_PATH];
 };

@@ -705,6 +705,9 @@
     <ClInclude Include="writeZWO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="writeGeneric.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MRC_creator.cpp">
@@ -804,6 +807,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="writeZWO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="writeGeneric.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

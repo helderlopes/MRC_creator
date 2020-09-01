@@ -419,6 +419,7 @@
     <ClInclude Include="writeERG.h" />
     <ClInclude Include="writeFIT.h" />
     <ClInclude Include="writeMRC.h" />
+    <ClInclude Include="writeGeneric.h" />
     <ClInclude Include="writeZWO.h" />
   </ItemGroup>
   <ItemGroup>
@@ -459,6 +460,7 @@
     <ClCompile Include="writeERG.cpp" />
     <ClCompile Include="writeFIT.cpp" />
     <ClCompile Include="writeMRC.cpp" />
+    <ClCompile Include="writeGeneric.cpp" />
     <ClCompile Include="writeZWO.cpp" />
   </ItemGroup>
   <ItemGroup>

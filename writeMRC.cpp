@@ -1,29 +1,11 @@
 #include "writeMRC.h"
 
-writeMRC::writeMRC()
-{
-	memset(outputFileName, NULL, sizeof(outputFileName));
-}
-
-writeMRC::~writeMRC()
+void writeMRC::fillFile(workoutInfo& data)
 {
 	if (outputFile.is_open())
 	{
-		outputFile.close();
-	}
-}
-
-void writeMRC::createFile(char* fileName)
-{
-	strcpy(outputFileName, fileName);
-	outputFile.open(outputFileName);
-}
-
-void writeMRC::closeFile()
-{
-	if (outputFile.is_open())
-	{
-		outputFile.close();
+		fillHeader();
+		fillCourse(data);
 	}
 }
 
@@ -33,7 +15,7 @@ void writeMRC::fillHeader()
 	outputFile << "VERSION = 2\n";
 	outputFile << "UNITS = ENGLISH\n";
 	outputFile << "DESCRIPTION = A description\n";
-	outputFile << "FILE NAME = " << outputFileName << "\n";
+	outputFile << "FILE NAME = " << removeFilePathAndExtension(outputFileName) << "\n";
 	outputFile << "MINUTES PERCENT\n";
 	outputFile << "[END COURSE HEADER]\n";
 }
@@ -54,13 +36,4 @@ void writeMRC::fillCourse(workoutInfo& data)
 	}
 
 	outputFile << "[END COURSE DATA]\n";
-}
-
-void writeMRC::fillFile(workoutInfo& data)
-{
-	if (outputFile.is_open())
-	{
-		fillHeader();
-		fillCourse(data);
-	}
 }

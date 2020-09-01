@@ -1,21 +1,14 @@
 #pragma once
-#include "readFile.h"
+#include "writeGeneric.h"
 
-#define SIZE_OF_FILE_EXTENSION 4
 
-class writeZWO
+
+class writeZWO : public writeGeneric
 {
 public:
-	writeZWO();
-	~writeZWO();
-	void createFile(char* fileName);
-	void closeFile();
 	void fillFile(workoutInfo& data);
 
 private:
 	void fillHeader();
 	void fillCourse(workoutInfo& data);
-
-	ofstream outputFile;
-	char outputFileName[_MAX_PATH];
 };

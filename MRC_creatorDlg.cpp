@@ -48,18 +48,6 @@ END_MESSAGE_MAP()
 
 void CMRCcreatorDlg::ReadRegistry()
 {
-	const CString REG_SW_GROUP = _T("SOFTWARE\\MRC Creator");
-	const CString REG_KEY_DIR = _T("Directory");
-	const CString REG_KEY_FTP = _T("FTP");
-	const CString REG_KEY_OFFSET = _T("Offset");
-	const CString REG_KEY_MRC = _T("MRC");
-	const CString REG_KEY_ERG = _T("ERG");
-	const CString REG_KEY_FIT = _T("FIT");
-	const CString REG_KEY_ZWO= _T("ZWO");
-	const CString REG_KEY_ANTFEC = _T("ANT+ FE-C");
-	const CString REG_KEY_WORKOUTDATA = _T("Workout Data");
-
-
 	CRegKey regKey;
 	TCHAR strValue[_MAX_PATH];
 	ZeroMemory(strValue, sizeof(strValue));
@@ -121,18 +109,6 @@ void CMRCcreatorDlg::ReadRegistry()
 
 void CMRCcreatorDlg::WriteRegistry()
 {
-	const CString REG_SW_GROUP = _T("SOFTWARE\\MRC Creator");
-	const CString REG_KEY_DIR = _T("Directory");
-	const CString REG_KEY_FTP = _T("FTP");
-	const CString REG_KEY_OFFSET = _T("Offset");
-	const CString REG_KEY_MRC = _T("MRC");
-	const CString REG_KEY_ERG = _T("ERG");
-	const CString REG_KEY_FIT = _T("FIT");
-	const CString REG_KEY_ZWO = _T("ZWO");
-	const CString REG_KEY_ANTFEC = _T("ANT+ FE-C");
-	const CString REG_KEY_WORKOUTDATA = _T("Workout Data");
-
-
 	CRegKey regKey;
 	TCHAR strValue[_MAX_PATH];
 	ZeroMemory(strValue, sizeof(strValue));
@@ -277,7 +253,7 @@ void CMRCcreatorDlg::OnBnClickedFit()
 	}
 }
 
-void listFilesOfSelDir(HANDLE& handle, WIN32_FIND_DATA& ffd, TCHAR* directory)
+void CMRCcreatorDlg::listFilesOfSelDir(HANDLE& handle, WIN32_FIND_DATA& ffd, TCHAR* directory)
 {
 	TCHAR selDir[_MAX_PATH];
 	wcscpy(selDir, directory);
@@ -285,7 +261,7 @@ void listFilesOfSelDir(HANDLE& handle, WIN32_FIND_DATA& ffd, TCHAR* directory)
 	handle = FindFirstFile(selDir, &ffd);
 }
 
-bool isFileTxt(char fileName[])
+bool CMRCcreatorDlg::isFileTxt(char fileName[])
 {
 	char fileExt[5];
 	strcpy(fileExt, (const char*)&fileName[strlen(fileName) - SIZE_OF_FILE_EXTENSION]);
@@ -299,7 +275,7 @@ bool isFileTxt(char fileName[])
 	}
 }
 
-bool hasNextFile(HANDLE& handle, WIN32_FIND_DATA& ffd)
+bool CMRCcreatorDlg::hasNextFile(HANDLE& handle, WIN32_FIND_DATA& ffd)
 {
 	if (FindNextFile(handle, &ffd))
 	{
@@ -390,7 +366,7 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 
 			if (generateMRC)
 			{
-				strcpy(&completeFilePath[strlen(completeFilePath) - SIZE_OF_FILE_EXTENSION], ".mrc");
+				PathRenameExtensionA(completeFilePath, ".mrc");
 				writeMRC writeMRC;
 				writeMRC.createFile(completeFilePath);
 				writeMRC.fillFile(read.data);
@@ -399,7 +375,7 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 
 			if (generateERG)
 			{
-				strcpy(&completeFilePath[strlen(completeFilePath) - SIZE_OF_FILE_EXTENSION], ".erg");
+				PathRenameExtensionA(completeFilePath, ".erg");
 				writeERG writeERG(ftp);
 				writeERG.createFile(completeFilePath);
 				writeERG.fillFile(read.data);
@@ -408,7 +384,7 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 
 			if (generateFIT)
 			{
-				strcpy(&completeFilePath[strlen(completeFilePath) - SIZE_OF_FILE_EXTENSION], ".fit");
+				PathRenameExtensionA(completeFilePath, ".fit");
 				writeFIT writeFIT(ftp, offset);
 				writeFIT.createFile(completeFilePath);
 				writeFIT.fillFile(read.data);
@@ -417,7 +393,7 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 
 			if (generateZWO)
 			{
-				strcpy(&completeFilePath[strlen(completeFilePath) - SIZE_OF_FILE_EXTENSION], ".zwo");
+				PathRenameExtensionA(completeFilePath, ".zwo");
 				writeZWO writeZWO;
 				writeZWO.createFile(completeFilePath);
 				writeZWO.fillFile(read.data);
@@ -426,7 +402,7 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 
 			if (generateInfo)
 			{
-				fileName[strlen(fileName) - SIZE_OF_FILE_EXTENSION] = '\0';
+				PathRemoveExtensionA(fileName);
 				workoutData.writeWorkoutData(read.data, fileName);
 			}
 		}

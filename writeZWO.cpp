@@ -1,43 +1,12 @@
 #include "writeZWO.h"
 
-writeZWO::writeZWO()
-{
-	memset(outputFileName, NULL, sizeof(outputFileName));
-}
-
-writeZWO::~writeZWO()
-{
-	if (outputFile.is_open())
-	{
-		outputFile.close();
-	}
-}
-
-void writeZWO::createFile(char* fileName)
-{
-	strcpy(outputFileName, fileName);
-	outputFile.open(outputFileName);
-}
-
-void writeZWO::closeFile()
-{
-	if (outputFile.is_open())
-	{
-		outputFile.close();
-	}
-}
-
 void writeZWO::fillHeader()
 {
-	char workoutName[_MAX_PATH];
-	string fileName = outputFileName;
-	fileName = fileName.substr(fileName.find_last_of("/\\") + 1);
-	strcpy(workoutName, fileName.c_str());
-	workoutName[strlen(workoutName) - SIZE_OF_FILE_EXTENSION] = '\0';
-
+	
+	//char* test = removeFilePathAndExtension(outputFileName);
 	outputFile << "<workout_file>\n";
 	outputFile << "\t<author></author>\n";
-	outputFile << "\t<name>" << workoutName <<"</name>\n";
+	outputFile << "\t<name>" << removeFilePathAndExtension(outputFileName) <<"</name>\n";
 	outputFile << "\t<description></description>\n";
 	outputFile << "\t<sportType>bike</sportType>\n"; 
 	outputFile << "\t<tags></tags>\n";

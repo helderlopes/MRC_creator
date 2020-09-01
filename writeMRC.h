@@ -1,19 +1,12 @@
 #pragma once
-#include "readFile.h"
+#include "writeGeneric.h"
 
-class writeMRC
+class writeMRC : public writeGeneric
 {
 public:
-	writeMRC();
-	~writeMRC();
-	void createFile(char* fileName);
-	void closeFile();
 	void fillFile(workoutInfo &data);
 
 private:
 	void fillHeader();
 	void fillCourse(workoutInfo& data);
-
-	ofstream outputFile;
-	char outputFileName[_MAX_PATH];
 };

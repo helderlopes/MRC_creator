@@ -26,6 +26,20 @@ protected:
 	HICON m_hIcon;
 	void ReadRegistry();
 	void WriteRegistry();
+	void listFilesOfSelDir(HANDLE& handle, WIN32_FIND_DATA& ffd, TCHAR* directory);
+	bool isFileTxt(char fileName[]);
+	bool CMRCcreatorDlg::hasNextFile(HANDLE& handle, WIN32_FIND_DATA& ffd);
+
+	const CString REG_SW_GROUP = _T("SOFTWARE\\MRC Creator");
+	const CString REG_KEY_DIR = _T("Directory");
+	const CString REG_KEY_FTP = _T("FTP");
+	const CString REG_KEY_OFFSET = _T("Offset");
+	const CString REG_KEY_MRC = _T("MRC");
+	const CString REG_KEY_ERG = _T("ERG");
+	const CString REG_KEY_FIT = _T("FIT");
+	const CString REG_KEY_ZWO = _T("ZWO");
+	const CString REG_KEY_ANTFEC = _T("ANT+ FE-C");
+	const CString REG_KEY_WORKOUTDATA = _T("Workout Data");
 
 	// Generated message map functions
 	virtual BOOL OnInitDialog();
