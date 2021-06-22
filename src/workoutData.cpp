@@ -127,7 +127,7 @@ void workoutData::calculateTotalTime(workoutInfo& data)
 	totalTime = 0;
 	for (unsigned int i = 0; i < data.numberOfSteps; i++)
 	{
-		totalTime += (unsigned int)(data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS);
+		totalTime += (unsigned int)round(data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS);
 	}
 }
 
@@ -142,20 +142,21 @@ void workoutData::generatePowerArray(workoutInfo& data)
 
 	for (unsigned int i = 0; i < data.numberOfSteps; i++)
 	{
-		for (unsigned int j = 0; j < (unsigned int)(data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS); j++)
+		double stepTimeInSeconds = data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS;
+		for (unsigned int j = 0; j < (unsigned int)round(stepTimeInSeconds); j++)
 		{
 			if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
 			{
-				powerBySecond[currentWorkoutTime + j] = (unsigned int)(data.workoutFTPValues[i][INITIALFTP] * functionalThresholdPower / ONE_CENTURY);
+				powerBySecond[currentWorkoutTime + j] = (unsigned int)round(data.workoutFTPValues[i][INITIALFTP] * functionalThresholdPower / ONE_CENTURY);
 			}
 			else 
 			{
 				int diff = (data.workoutFTPValues[i][FINALFTP] - data.workoutFTPValues[i][INITIALFTP]);
-				double ramp = ((j + 1.0) / (data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS));
+				double ramp = ((j + 1.0) / (stepTimeInSeconds));
 				int rampRate = (int)(diff * ramp);
-				powerBySecond[currentWorkoutTime + j] = (unsigned int)((data.workoutFTPValues[i][INITIALFTP] + rampRate) * functionalThresholdPower / ONE_CENTURY);
+				powerBySecond[currentWorkoutTime + j] = (unsigned int)round((data.workoutFTPValues[i][INITIALFTP] + rampRate) * functionalThresholdPower / ONE_CENTURY);
 			}
 		}
-		currentWorkoutTime += (unsigned int)(data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS);
+		currentWorkoutTime += (unsigned int)round(stepTimeInSeconds);
 	}
 }

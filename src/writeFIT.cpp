@@ -99,7 +99,7 @@ void writeFIT::fillWorkoutStep(workoutInfo& data)
 	for (unsigned int i = 0; i < data.numberOfSteps; i++)
 	{
 		fit::WorkoutStepMesg workoutStepMesg;
-		workoutStepMesg.SetDurationValue(FIT_UINT32(data.workoutTimeValue[i] * 60) * 1000); //step time in ms
+		workoutStepMesg.SetDurationValue(FIT_UINT32(round(data.workoutTimeValue[i] * 60)) * 1000); //step time in ms
 		workoutStepMesg.SetTargetValue(0);
 		if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
 		{
