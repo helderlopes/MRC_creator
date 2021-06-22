@@ -408,6 +408,7 @@
     <ClInclude Include="garminfitsdk\fit_workout_step_mesg_listener.hpp" />
     <ClInclude Include="garminfitsdk\fit_zones_target_mesg.hpp" />
     <ClInclude Include="garminfitsdk\fit_zones_target_mesg_listener.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\framework.h" />
     <ClInclude Include="src\MRC_creator.h" />
     <ClInclude Include="src\MRC_creatorDlg.h" />
