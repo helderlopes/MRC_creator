@@ -191,7 +191,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h" />
     <ClInclude Include="garminfitsdk\fit.hpp" />
     <ClInclude Include="garminfitsdk\FitDecode.h" />
     <ClInclude Include="garminfitsdk\FitDeveloperField.h" />
@@ -409,18 +408,19 @@
     <ClInclude Include="garminfitsdk\fit_workout_step_mesg_listener.hpp" />
     <ClInclude Include="garminfitsdk\fit_zones_target_mesg.hpp" />
     <ClInclude Include="garminfitsdk\fit_zones_target_mesg_listener.hpp" />
-    <ClInclude Include="MRC_creator.h" />
-    <ClInclude Include="MRC_creatorDlg.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="readFile.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="workoutData.h" />
-    <ClInclude Include="writeERG.h" />
-    <ClInclude Include="writeFIT.h" />
-    <ClInclude Include="writeMRC.h" />
-    <ClInclude Include="writeGeneric.h" />
-    <ClInclude Include="writeZWO.h" />
+    <ClInclude Include="src\framework.h" />
+    <ClInclude Include="src\MRC_creator.h" />
+    <ClInclude Include="src\MRC_creatorDlg.h" />
+    <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\readFile.h" />
+    <ClInclude Include="src\resource.h" />
+    <ClInclude Include="src\targetver.h" />
+    <ClInclude Include="src\workoutData.h" />
+    <ClInclude Include="src\writeERG.h" />
+    <ClInclude Include="src\writeFIT.h" />
+    <ClInclude Include="src\writeGeneric.h" />
+    <ClInclude Include="src\writeMRC.h" />
+    <ClInclude Include="src\writeZWO.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="garminfitsdk\fit.cpp" />
@@ -447,24 +447,16 @@
     <ClCompile Include="garminfitsdk\fit_profile.cpp" />
     <ClCompile Include="garminfitsdk\fit_protocol_validator.cpp" />
     <ClCompile Include="garminfitsdk\fit_unicode.cpp" />
-    <ClCompile Include="MRC_creator.cpp" />
-    <ClCompile Include="MRC_creatorDlg.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="readFile.cpp" />
-    <ClCompile Include="workoutData.cpp" />
-    <ClCompile Include="writeERG.cpp" />
-    <ClCompile Include="writeFIT.cpp" />
-    <ClCompile Include="writeMRC.cpp" />
-    <ClCompile Include="writeGeneric.cpp" />
-    <ClCompile Include="writeZWO.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="MRCcreator.rc" />
+    <ClCompile Include="src\MRC_creator.cpp" />
+    <ClCompile Include="src\MRC_creatorDlg.cpp" />
+    <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="src\readFile.cpp" />
+    <ClCompile Include="src\workoutData.cpp" />
+    <ClCompile Include="src\writeERG.cpp" />
+    <ClCompile Include="src\writeFIT.cpp" />
+    <ClCompile Include="src\writeGeneric.cpp" />
+    <ClCompile Include="src\writeMRC.cpp" />
+    <ClCompile Include="src\writeZWO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="garminfitsdk\FitDecode.mm" />
@@ -478,6 +470,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MRC_creator.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MRCcreator.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
