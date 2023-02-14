@@ -15,9 +15,9 @@ static string checkQuotesAndGenerateDescription(char* str)
 
 readFile::readFile()
 {
-	memset((void*)& data, 0, sizeof(workoutInfo));
+	data.numberOfSteps = 0;
+	data.numberOfDescriptions = 0;
 }
-
 
 readFile::~readFile()
 {

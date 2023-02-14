@@ -253,14 +253,6 @@ void CMRCcreatorDlg::OnBnClickedFit()
 	}
 }
 
-void CMRCcreatorDlg::listFilesOfSelDir(HANDLE& handle, WIN32_FIND_DATA& ffd, TCHAR* directory)
-{
-	TCHAR selDir[_MAX_PATH];
-	wcscpy(selDir, directory);
-	StringCchCat(selDir, _MAX_PATH, TEXT("\\*"));
-	handle = FindFirstFile(selDir, &ffd);
-}
-
 bool CMRCcreatorDlg::isFileTxt(char fileName[])
 {
 	char fileExt[5];
@@ -274,19 +266,6 @@ bool CMRCcreatorDlg::isFileTxt(char fileName[])
 		return false;
 	}
 }
-
-bool CMRCcreatorDlg::hasNextFile(HANDLE& handle, WIN32_FIND_DATA& ffd)
-{
-	if (FindNextFile(handle, &ffd))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
 
 void CMRCcreatorDlg::OnBnClickedGenerate()
 {
@@ -348,7 +327,11 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 		workoutData.createFile(filePath);
 	}
 
-	listFilesOfSelDir(hFind, ffd, strValue);
+	TCHAR selDir[_MAX_PATH];
+	wcscpy(selDir, strValue);
+	StringCchCat(selDir, _MAX_PATH, TEXT("\\*"));
+	hFind = FindFirstFile(selDir, &ffd);
+
 	do
 	{
 		char fileName[_MAX_PATH];
@@ -406,7 +389,7 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 				workoutData.writeWorkoutData(read.data, fileName);
 			}
 		}
-	} while (hasNextFile(hFind, ffd));
+	} while (FindNextFile(hFind, &ffd) != NULL);
 	FindClose(hFind);
 
 	if (generateInfo)

@@ -26,9 +26,7 @@ protected:
 	HICON m_hIcon;
 	void ReadRegistry();
 	void WriteRegistry();
-	void listFilesOfSelDir(HANDLE& handle, WIN32_FIND_DATA& ffd, TCHAR* directory);
 	bool isFileTxt(char fileName[]);
-	bool CMRCcreatorDlg::hasNextFile(HANDLE& handle, WIN32_FIND_DATA& ffd);
 
 	const CString REG_SW_GROUP = _T("SOFTWARE\\MRC Creator");
 	const CString REG_KEY_DIR = _T("Directory");
