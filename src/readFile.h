@@ -1,4 +1,5 @@
 #pragma once
+#include <string.h>
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -16,8 +17,10 @@ typedef enum
 typedef struct file_tag
 {
 	unsigned int	numberOfSteps;
+	unsigned int	numberOfDescriptions;
 	unsigned int	workoutFTPValues[ROWSIZE][COLUMNSIZE];
 	double			workoutTimeValue[ROWSIZE];
+	string			stepDescription[ROWSIZE];
 } workoutInfo;
 
 class readFile

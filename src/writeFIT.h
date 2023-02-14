@@ -8,8 +8,6 @@
 #include "fit_mesg_broadcaster.hpp"
 //#include "fit_date_time.hpp"
 
-#define VALUE_TO_ADD_ON_TARGET_POWER 1000
-
 #define SIZE_OF_FILE_EXTENSION 4
 
 class writeFIT

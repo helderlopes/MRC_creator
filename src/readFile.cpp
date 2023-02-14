@@ -1,6 +1,17 @@
 #include "readFile.h"
 
-
+static string checkQuotesAndGenerateDescription(char* str)
+{
+	char* startPos = strchr(str, '"');
+	if (startPos != NULL)
+	{
+		string res(startPos);
+		res.pop_back();
+		res.erase(0, 1);
+		return res;
+	}
+	return "";
+}
 
 readFile::readFile()
 {
@@ -31,12 +42,19 @@ void readFile::closeFile()
 
 void readFile::fillData()
 {
-	char curLine[256];
+	char curLine[512];
 	char *pValue;
 	if (inputFile.is_open())
 	{
-		while (inputFile.getline(curLine, 256))
+		while (inputFile.getline(curLine, 512))
 		{
+			//check if there's a workout description
+			data.stepDescription[data.numberOfSteps] = checkQuotesAndGenerateDescription(&curLine[0]);
+			if (data.stepDescription[data.numberOfSteps] != "")
+			{
+				data.numberOfDescriptions++;
+			}
+
 			//get step time
 			pValue = strtok(curLine, "\t ,;");
 			data.workoutTimeValue[data.numberOfSteps] = atof(pValue);
@@ -55,6 +73,7 @@ void readFile::fillData()
 			{
 				data.workoutFTPValues[data.numberOfSteps][FINALFTP] = data.workoutFTPValues[data.numberOfSteps][INITIALFTP];
 			}
+
 			data.numberOfSteps++;
 		}
 	}

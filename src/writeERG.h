@@ -10,6 +10,8 @@ public:
 private:
 	void fillHeader();
 	void fillCourse(workoutInfo& data);
+	void fillDescription(workoutInfo& data);
 
 	unsigned int functionalThresholdPower;
+	double descriptionsTime[ROWSIZE];
 };

@@ -9,4 +9,7 @@ public:
 private:
 	void fillHeader();
 	void fillCourse(workoutInfo& data);
+	void fillDescription(workoutInfo& data);
+
+	double descriptionsTime[ROWSIZE];
 };
