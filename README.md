@@ -39,7 +39,7 @@ Example:
 ```
 5	40
 
-5	40	70 "This is a ramp from 40 to 70% ftp"
+5	40	70  "This is a ramp from 40 to 70% ftp"
 
 5	70
 
