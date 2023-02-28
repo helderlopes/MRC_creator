@@ -39,7 +39,7 @@ Example:
 ```
 5	40
 
-5	40	70
+5	40	70 "This is a ramp from 40 to 70% ftp"
 
 5	70
 
@@ -50,7 +50,15 @@ Example:
 
 Note that the second line creates a ramp from 40% ftp to 70% ftp during the 5 min step time.
 
+You can also add descriptions to the step, just like the second line.
+
 The other steps have just one FTP Target.
+
+## Samples
+
+The folder "samples" contain some workout samples. Their file name describes the workout type. 
+
+The "warmup.txt" also has descriptions in some steps.
 
 ## Output Files Description and Documentation
 
