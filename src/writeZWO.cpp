@@ -14,23 +14,37 @@ void writeZWO::fillHeader()
 
 void writeZWO::fillCourse(workoutInfo& data)
 {
-	double workoutTotalTime = 0.0;
-
 	outputFile << "\t<workout>\n";
 
 	for (unsigned int i = 0; i < data.numberOfSteps; i++)
 	{
+		string intervalType;
 		if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
 		{
-			outputFile << "\t\t<SteadyState Duration=\"" << (int)round(data.workoutTimeValue[i]*60) << "\" Power=\"" << (data.workoutFTPValues[i][INITIALFTP]/100.0) << "\"/>\n";
+			outputFile << "\t\t<SteadyState Duration=\"" << (int)round(data.workoutTimeValue[i]*60) << "\" Power=\"" << (data.workoutFTPValues[i][INITIALFTP]/100.0) << "\"" ;
+			intervalType = "SteadyState";
 		}
 		else if (data.workoutFTPValues[i][INITIALFTP] < data.workoutFTPValues[i][FINALFTP])
 		{
-			outputFile << "\t\t<Ramp Duration=\"" << (int)round(data.workoutTimeValue[i] * 60) << "\" PowerLow=\"" << (data.workoutFTPValues[i][INITIALFTP] / 100.0) << "\" PowerHigh=\"" << (data.workoutFTPValues[i][FINALFTP] / 100.0) << "\"/>\n";
+			outputFile << "\t\t<Ramp Duration=\"" << (int)round(data.workoutTimeValue[i] * 60) << "\" PowerLow=\"" << (data.workoutFTPValues[i][INITIALFTP] / 100.0) << "\" PowerHigh=\"" << (data.workoutFTPValues[i][FINALFTP] / 100.0) << "\"";
+			intervalType = "Ramp";
 		}
 		else // data.workoutFTPValues[i][INITIALFTP] > data.workoutFTPValues[i][FINALFTP]
 		{
-			outputFile << "\t\t<CoolDown Duration=\"" << (int)round(data.workoutTimeValue[i] * 60) << "\" PowerLow=\"" << (data.workoutFTPValues[i][INITIALFTP] / 100.0) << "\" PowerHigh=\"" << (data.workoutFTPValues[i][FINALFTP] / 100.0) << "\"/>\n";
+			outputFile << "\t\t<CoolDown Duration=\"" << (int)round(data.workoutTimeValue[i] * 60) << "\" PowerLow=\"" << (data.workoutFTPValues[i][INITIALFTP] / 100.0) << "\" PowerHigh=\"" << (data.workoutFTPValues[i][FINALFTP] / 100.0) << "\"";
+			intervalType = "CoolDown";
+		}
+
+		//if there's a description, put it inside the tag
+		if (data.stepDescription[i] != "")
+		{
+			outputFile << ">\n";
+			outputFile << "\t\t\t<textevent timeoffset=\"0\" message=\"" << data.stepDescription[i] << "\"/>\n";
+			outputFile << "\t\t</" << intervalType << ">\n";
+		}
+		else //otherwise just close the tag
+		{
+			outputFile << "/>\n";
 		}
 	}
 
