@@ -1,11 +1,11 @@
 #pragma once
 #include "readFile.h"
-#include "fit_encode.hpp"
-#include "fit_file_id_mesg.hpp"
-#include "fit_workout_mesg.hpp"
-#include "fit_workout_step_mesg.hpp"
+#include "../garminfitsdk/fit_encode.hpp"
+#include "../garminfitsdk/fit_file_id_mesg.hpp"
+#include "../garminfitsdk/fit_workout_mesg.hpp"
+#include "../garminfitsdk/fit_workout_step_mesg.hpp"
 
-#include "fit_mesg_broadcaster.hpp"
+#include "../garminfitsdk/fit_mesg_broadcaster.hpp"
 //#include "fit_date_time.hpp"
 
 #define SIZE_OF_FILE_EXTENSION 4
