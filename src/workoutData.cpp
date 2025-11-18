@@ -71,10 +71,10 @@ void workoutData::fillInfo(char* workoutName)
 void workoutData::calculateNP()
 {
 	normalizedPower = 0.0;
-	float averagePoweredSum = 0;
+	double averagePoweredSum = 0;
 	for (unsigned int i = (VALUE_OF_SEC_AVG_NP-1); i < totalTime; i++)
 	{
-		float rollingAverage = 0;
+		double rollingAverage = 0;
 		for (unsigned j = 0; j < VALUE_OF_SEC_AVG_NP; j++)
 		{
 			rollingAverage += powerBySecond[i - j];
@@ -143,13 +143,21 @@ void workoutData::generatePowerArray(workoutInfo& data)
 	for (unsigned int i = 0; i < data.numberOfSteps; i++)
 	{
 		double stepTimeInSeconds = data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS;
-		for (unsigned int j = 0; j < (unsigned int)round(stepTimeInSeconds); j++)
+		unsigned int stepTimeRounded = (unsigned int)round(stepTimeInSeconds);
+
+		// Ensure we do not write past the end of powerBySecond
+		if (currentWorkoutTime + stepTimeRounded > totalTime)
+		{
+			stepTimeRounded = totalTime > currentWorkoutTime ? totalTime - currentWorkoutTime : 0;
+		}
+
+		for (unsigned int j = 0; j < stepTimeRounded; j++)
 		{
 			if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
 			{
 				powerBySecond[currentWorkoutTime + j] = (unsigned int)round(data.workoutFTPValues[i][INITIALFTP] * functionalThresholdPower / ONE_CENTURY);
 			}
-			else 
+			else
 			{
 				int diff = (data.workoutFTPValues[i][FINALFTP] - data.workoutFTPValues[i][INITIALFTP]);
 				double ramp = ((j + 1.0) / (stepTimeInSeconds));
@@ -157,6 +165,6 @@ void workoutData::generatePowerArray(workoutInfo& data)
 				powerBySecond[currentWorkoutTime + j] = (unsigned int)round((data.workoutFTPValues[i][INITIALFTP] + rampRate) * functionalThresholdPower / ONE_CENTURY);
 			}
 		}
-		currentWorkoutTime += (unsigned int)round(stepTimeInSeconds);
+		currentWorkoutTime += stepTimeRounded;
 	}
 }
