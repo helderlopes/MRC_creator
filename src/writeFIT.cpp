@@ -12,7 +12,7 @@ std::wstring s2ws(const std::string& str)
 }
 
 writeFIT::writeFIT(unsigned int functionalThresholdPower, unsigned int powerRange)
-	: encode(fit::ProtocolVersion::V10)
+	: encode(fit::ProtocolVersion::V20)
 {
 	memset(outputFileName, NULL, sizeof(outputFileName));
 	this->functionalThresholdPower = functionalThresholdPower;
@@ -48,7 +48,7 @@ void writeFIT::fillFile(workoutInfo& data)
 {
 	fillFileId();
 
-	fillFileCreator();
+	//fillFileCreator();
 	
 	fillWorkout(data.numberOfSteps);
 	
