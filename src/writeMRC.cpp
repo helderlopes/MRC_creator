@@ -16,7 +16,7 @@ void writeMRC::fillHeader()
 	outputFile << "VERSION = 2\n";
 	outputFile << "UNITS = ENGLISH\n";
 	outputFile << "DESCRIPTION = A description\n";
-	outputFile << "FILE NAME = " << removeFilePathAndExtension(outputFileName) << "\n";
+	outputFile << "FILE NAME = " << removeFilePathAndExtension(_outputFileName) << "\n";
 	outputFile << "MINUTES PERCENT\n";
 	outputFile << "[END COURSE HEADER]\n";
 }
@@ -30,7 +30,7 @@ void writeMRC::fillCourse(workoutInfo& data)
 	unsigned int j = 0;
 	for (unsigned int i = 0; i < data.numberOfSteps; i++) 
 	{
-		if (data.numberOfDescriptions > 0 && data.stepDescription[i] != "")
+		if (data.numberOfDescriptions > 0 && data.stepDescription[i] != L"")
 		{
 			descriptionsTime[j++] = workoutTotalTime * 60.0;
 		}
@@ -54,7 +54,7 @@ void writeMRC::fillDescription(workoutInfo& data)
 		unsigned int j = 0;
 		for (unsigned int i = 0; i < data.numberOfSteps; i++)
 		{
-			if (data.stepDescription[i] != "")
+			if (data.stepDescription[i] != L"")
 			{
 				outputFile << descriptionsTime[j++] << '\t' << data.stepDescription[i] << '\t' << "10" << '\n';
 			}

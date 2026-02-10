@@ -13,13 +13,13 @@ class workoutData
 public:
 	workoutData(unsigned int functionalThresholdPower);
 	~workoutData();
-	void writeWorkoutData(workoutInfo& data, char* workoutName);
-	void createFile(char* fileName);
+	void WriteWorkoutData(workoutInfo& data, std::wstring workoutName);
+	void createFile(std::wstring fileName);
 	void closeFile();
 
 private:
 	void fillHeader();
-	void fillInfo(char* workoutName);
+	void fillInfo(std::wstring workoutName);
 	void calculateNP();
 	void calculateIF();
 	void calculateTSS();
@@ -39,6 +39,6 @@ private:
 	unsigned int totalTime; //time in seconds
 	unsigned int *powerBySecond; //array with power divided second by second
 
-	ofstream outputFile;
-	char outputFileName[_MAX_PATH];
+	std::wofstream outputFile;
+	std::wstring outputFileName;
 };

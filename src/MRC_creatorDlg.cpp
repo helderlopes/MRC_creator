@@ -9,6 +9,7 @@
 #include "afxdialogex.h"
 
 #include <strsafe.h>
+#include <filesystem>
 
 #include "readFile.h"
 #include "writeMRC.h"
@@ -29,7 +30,7 @@
 CMRCcreatorDlg::CMRCcreatorDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MRC_CREATOR_DIALOG, pParent)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	_icon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 void CMRCcreatorDlg::DoDataExchange(CDataExchange* pDX)
@@ -48,117 +49,126 @@ END_MESSAGE_MAP()
 
 void CMRCcreatorDlg::ReadRegistry()
 {
-	CRegKey regKey;
-	TCHAR strValue[_MAX_PATH];
-	ZeroMemory(strValue, sizeof(strValue));
-	ULONG strSize = sizeof(strValue);
-	DWORD dwValue;
+	HKEY hKey = NULL;
+	wchar_t regValueStr[MAX_PATH]{ 0 };
+	unsigned long regSize = sizeof(regValueStr);
+	unsigned long regValueULong = 0;
+	long ret;
 
-	LSTATUS lRet = regKey.Open(HKEY_CURRENT_USER, REG_SW_GROUP);
-	if (ERROR_SUCCESS != lRet)
+	ret = RegOpenKeyEx(HKEY_CURRENT_USER, REG_SW_GROUP, 0, KEY_READ, &hKey);
+	if (ERROR_SUCCESS != ret)
 	{
-		lRet = regKey.Create(HKEY_CURRENT_USER, REG_SW_GROUP);
-		if (ERROR_SUCCESS == lRet)
+		ret = RegCreateKeyEx(HKEY_CURRENT_USER, REG_SW_GROUP, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL);
+		if (ERROR_SUCCESS == ret)
 		{
-			regKey.SetStringValue(REG_KEY_FTP, _T("200"));
-			regKey.SetStringValue(REG_KEY_OFFSET, _T("10"));
+			RegSetValueEx(hKey, REG_KEY_FTP, 0, REG_SZ, (LPBYTE)_T("200"), (DWORD)(wcslen(_T("200")) + 1) * sizeof(wchar_t));
+			RegSetValueEx(hKey, REG_KEY_OFFSET, 0, REG_SZ, (LPBYTE)_T("10"), (DWORD)(wcslen(_T("10")) + 1) * sizeof(wchar_t));
 		}
 		else
 		{
-			regKey.Close();
+			if (hKey) RegCloseKey(hKey);
 			return;
 		}
 	}
-	lRet = regKey.QueryStringValue(REG_KEY_DIR, strValue, &strSize);
-	SetDlgItemText(IDC_WORK_DIR, strValue);
 
-	strSize = sizeof(strValue);
-	lRet = regKey.QueryStringValue(REG_KEY_FTP, strValue, &strSize);
-	SetDlgItemText(IDC_FTP, strValue);
+	regSize = sizeof(regValueStr);
+	ret = RegQueryValueEx(hKey, REG_KEY_DIR, NULL, NULL, (unsigned char*)regValueStr, &regSize);
+	SetDlgItemText(IDC_WORK_DIR, regValueStr);
 
-	strSize = sizeof(strValue);
-	lRet = regKey.QueryStringValue(REG_KEY_OFFSET, strValue, &strSize);
-	SetDlgItemText(IDC_OFFSET, strValue);
+	ZeroMemory(regValueStr, sizeof(regValueStr));
+	regSize = sizeof(regValueStr);
+	ret = RegQueryValueEx(hKey, REG_KEY_FTP, NULL, NULL, (unsigned char*)regValueStr, &regSize);
+	SetDlgItemText(IDC_FTP, regValueStr);
 
-	lRet = regKey.QueryDWORDValue(REG_KEY_MRC, dwValue);
+	ZeroMemory(regValueStr, sizeof(regValueStr));
+	regSize = sizeof(regValueStr);
+	ret = RegQueryValueEx(hKey, REG_KEY_OFFSET, NULL, NULL, (unsigned char*)regValueStr, &regSize);
+	SetDlgItemText(IDC_OFFSET, regValueStr);
+
+	regSize = sizeof(unsigned long);
+	ret = RegQueryValueEx(hKey, REG_KEY_MRC, NULL, NULL, (unsigned char*)&regValueULong, &regSize);
 	CButton* button = (CButton*)GetDlgItem(IDC_MRC);
-	button->SetCheck(dwValue);
+	button->SetCheck(regValueULong);
 
-	lRet = regKey.QueryDWORDValue(REG_KEY_ERG, dwValue);
+	ret = RegQueryValueEx(hKey, REG_KEY_ERG, NULL, NULL, (unsigned char*)&regValueULong, &regSize);
 	button = (CButton*)GetDlgItem(IDC_ERG);
-	button->SetCheck(dwValue);
+	button->SetCheck(regValueULong);
 
-	lRet = regKey.QueryDWORDValue(REG_KEY_FIT, dwValue);
+	ret = RegQueryValueEx(hKey, REG_KEY_FIT, NULL, NULL, (unsigned char*)&regValueULong, &regSize);
 	button = (CButton*)GetDlgItem(IDC_FIT);
-	button->SetCheck(dwValue);
+	button->SetCheck(regValueULong);
 
-	lRet = regKey.QueryDWORDValue(REG_KEY_ZWO, dwValue);
+	ret = RegQueryValueEx(hKey, REG_KEY_ZWO, NULL, NULL, (unsigned char*)&regValueULong, &regSize);
 	button = (CButton*)GetDlgItem(IDC_ZWO);
-	button->SetCheck(dwValue);
+	button->SetCheck(regValueULong);
 
-	lRet = regKey.QueryDWORDValue(REG_KEY_ANTFEC, dwValue);
+	ret = RegQueryValueEx(hKey, REG_KEY_ANTFEC, NULL, NULL, (unsigned char*)&regValueULong, &regSize);
 	button = (CButton*)GetDlgItem(IDC_NO_OFFSET);
-	button->SetCheck(dwValue);
+	button->SetCheck(regValueULong);
 
-	lRet = regKey.QueryDWORDValue(REG_KEY_WORKOUTDATA, dwValue);
+	ret = RegQueryValueEx(hKey, REG_KEY_WORKOUTDATA, NULL, NULL, (unsigned char*)&regValueULong, &regSize);
 	button = (CButton*)GetDlgItem(IDC_INFO);
-	button->SetCheck(dwValue);
+	button->SetCheck(regValueULong);
 
-	regKey.Close();
+	if (hKey)
+	{
+		RegCloseKey(hKey);
+	}
 }
 
 void CMRCcreatorDlg::WriteRegistry()
 {
-	CRegKey regKey;
-	TCHAR strValue[_MAX_PATH];
-	ZeroMemory(strValue, sizeof(strValue));
-	ULONG strSize = sizeof(strValue);
-	DWORD dwValue;
+	HKEY hKey = NULL;
+	wchar_t regValueStr[MAX_PATH]{ 0 };
+	unsigned long value = 0;
+	unsigned long cbData = 0;
+	long ret;
 
-	LSTATUS lRet = regKey.Open(HKEY_CURRENT_USER, REG_SW_GROUP);
-	if (ERROR_SUCCESS != lRet)
+	ret = RegCreateKeyEx(HKEY_CURRENT_USER, REG_SW_GROUP, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL);
+	if (ret != ERROR_SUCCESS)
 	{
-		lRet = regKey.Create(HKEY_CURRENT_USER, REG_SW_GROUP);
-		if (ERROR_SUCCESS != lRet)
-		{
-			regKey.Close();
-			return;
-		}
+		if (hKey) RegCloseKey(hKey);
+		return;
 	}
-	GetDlgItemText(IDC_WORK_DIR, strValue, strSize);
-	lRet = regKey.SetStringValue(REG_KEY_DIR, strValue, REG_SZ);
 
-	GetDlgItemText(IDC_FTP, strValue, strSize);
-	lRet = regKey.SetStringValue(REG_KEY_FTP, strValue, REG_SZ);
+	GetDlgItemText(IDC_WORK_DIR, regValueStr, MAX_PATH);
+	cbData = (lstrlen(regValueStr) + 1) * sizeof(wchar_t);
+	RegSetValueEx(hKey, REG_KEY_DIR, 0, REG_SZ, (const unsigned char*)regValueStr, cbData);
 
-	GetDlgItemText(IDC_OFFSET, strValue, strSize);
-	lRet = regKey.SetStringValue(REG_KEY_OFFSET, strValue, REG_SZ);
+	GetDlgItemText(IDC_FTP, regValueStr, MAX_PATH);
+	cbData = (lstrlen(regValueStr) + 1) * sizeof(wchar_t);
+	RegSetValueEx(hKey, REG_KEY_FTP, 0, REG_SZ, (const unsigned char*)regValueStr, cbData);
 
+	GetDlgItemText(IDC_OFFSET, regValueStr, MAX_PATH);
+	cbData = (lstrlen(regValueStr) + 1) * sizeof(wchar_t);
+	RegSetValueEx(hKey, REG_KEY_OFFSET, 0, REG_SZ, (const unsigned char*)regValueStr, cbData);
+
+	// Write unsigned long values
 	CButton* button = (CButton*)GetDlgItem(IDC_MRC);
-	dwValue = button->GetCheck();
-	lRet = regKey.SetDWORDValue(REG_KEY_MRC, dwValue);
+	value = static_cast<unsigned long>(button->GetCheck());
+	RegSetValueEx(hKey, REG_KEY_MRC, 0, REG_DWORD, (const unsigned char*)&value, sizeof(value));
 
 	button = (CButton*)GetDlgItem(IDC_ERG);
-	dwValue = button->GetCheck();
-	lRet = regKey.SetDWORDValue(REG_KEY_ERG, dwValue);
+	value = static_cast<unsigned long>(button->GetCheck());
+	RegSetValueEx(hKey, REG_KEY_ERG, 0, REG_DWORD, (const unsigned char*)&value, sizeof(value));
 
 	button = (CButton*)GetDlgItem(IDC_FIT);
-	dwValue = button->GetCheck();
-	lRet = regKey.SetDWORDValue(REG_KEY_FIT, dwValue);
+	value = static_cast<unsigned long>(button->GetCheck());
+	RegSetValueEx(hKey, REG_KEY_FIT, 0, REG_DWORD, (const unsigned char*)&value, sizeof(value));
 
 	button = (CButton*)GetDlgItem(IDC_ZWO);
-	dwValue = button->GetCheck();
-	lRet = regKey.SetDWORDValue(REG_KEY_ZWO, dwValue);
+	value = static_cast<unsigned long>(button->GetCheck());
+	RegSetValueEx(hKey, REG_KEY_ZWO, 0, REG_DWORD, (const unsigned char*)&value, sizeof(value));
 
 	button = (CButton*)GetDlgItem(IDC_NO_OFFSET);
-	dwValue = button->GetCheck();
-	lRet = regKey.SetDWORDValue(REG_KEY_ANTFEC, dwValue);
+	value = static_cast<unsigned long>(button->GetCheck());
+	RegSetValueEx(hKey, REG_KEY_ANTFEC, 0, REG_DWORD, (const unsigned char*)&value, sizeof(value));
 
 	button = (CButton*)GetDlgItem(IDC_INFO);
-	dwValue = button->GetCheck();
-	lRet = regKey.SetDWORDValue(REG_KEY_WORKOUTDATA, dwValue);
+	value = static_cast<unsigned long>(button->GetCheck());
+	RegSetValueEx(hKey, REG_KEY_WORKOUTDATA, 0, REG_DWORD, (const unsigned char*)&value, sizeof(value));
 
-	regKey.Close();
+	RegCloseKey(hKey);
 }
 
 
@@ -170,10 +180,9 @@ BOOL CMRCcreatorDlg::OnInitDialog()
 
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog
-	SetIcon(m_hIcon, TRUE);			// Set big icon
-	SetIcon(m_hIcon, FALSE);		// Set small icon
+	SetIcon(_icon, TRUE);			// Set big icon
+	SetIcon(_icon, FALSE);		// Set small icon
 
-	// TODO: Add extra initialization here
 	ReadRegistry();
 	OnBnClickedFit();
 
@@ -201,7 +210,7 @@ void CMRCcreatorDlg::OnPaint()
 		int y = (rect.Height() - cyIcon + 1) / 2;
 
 		// Draw the icon
-		dc.DrawIcon(x, y, m_hIcon);
+		dc.DrawIcon(x, y, _icon);
 	}
 	else
 	{
@@ -213,14 +222,13 @@ void CMRCcreatorDlg::OnPaint()
 //  the minimized window.
 HCURSOR CMRCcreatorDlg::OnQueryDragIcon()
 {
-	return static_cast<HCURSOR>(m_hIcon);
+	return static_cast<HCURSOR>(_icon);
 }
 
 
 
 void CMRCcreatorDlg::OnClose()
 {
-	// TODO: Add your message handler code here and/or call default
 	WriteRegistry();
 
 	CDialogEx::OnClose();
@@ -229,7 +237,6 @@ void CMRCcreatorDlg::OnClose()
 
 void CMRCcreatorDlg::OnBnClickedSelDir()
 {
-	// TODO: Add your control notification handler code here
 	CFolderPickerDialog picker;
 	if (picker.DoModal() == IDOK)
 	{
@@ -241,7 +248,6 @@ void CMRCcreatorDlg::OnBnClickedSelDir()
 
 void CMRCcreatorDlg::OnBnClickedFit()
 {
-	// TODO: Add your control notification handler code here
 	CButton* button = (CButton*)GetDlgItem(IDC_FIT);
 	if (button->GetCheck())
 	{
@@ -253,59 +259,43 @@ void CMRCcreatorDlg::OnBnClickedFit()
 	}
 }
 
-bool CMRCcreatorDlg::isFileTxt(char fileName[])
+bool CMRCcreatorDlg::IsFileTxt(std::wstring fileName)
 {
-	char fileExt[5];
-	strcpy(fileExt, (const char*)&fileName[strlen(fileName) - SIZE_OF_FILE_EXTENSION]);
-	if (!strcmp(fileExt, ".txt"))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return fileName.ends_with(L".txt");
+}
+
+std::wstring CMRCcreatorDlg::ChangeExtension(const std::wstring& filePath, const std::wstring& newExtension)
+{
+	std::filesystem::path path(filePath);
+	path.replace_extension(newExtension); 
+	return path.wstring(); 
 }
 
 void CMRCcreatorDlg::OnBnClickedGenerate()
 {
-	// TODO: Add your control notification handler code here
 	bool generateMRC, generateERG, generateFIT, generateZWO, generateFEC, generateInfo;
 	generateMRC = generateERG = generateFIT = generateZWO = generateFEC = generateInfo = false;
+	
 	CButton* button = (CButton*)GetDlgItem(IDC_MRC);
-	if (button->GetCheck())
-	{
-		generateMRC = true;
-	}
-	button = (CButton*)GetDlgItem(IDC_ERG);
-	if (button->GetCheck())
-	{
-		generateERG = true;
-	}
-	button = (CButton*)GetDlgItem(IDC_FIT);
-	if (button->GetCheck())
-	{
-		generateFIT = true;
-	}
-	button = (CButton*)GetDlgItem(IDC_ZWO);
-	if (button->GetCheck())
-	{
-		generateZWO = true;
-	}
-	button = (CButton*)GetDlgItem(IDC_NO_OFFSET);
-	if (button->GetCheck())
-	{
-		generateFEC = true;
-	}
-	button = (CButton*)GetDlgItem(IDC_INFO);
-	if (button->GetCheck())
-	{
-		generateInfo = true;
-	}
+	generateMRC = button->GetCheck();
 
-	TCHAR strValue[_MAX_PATH];
-	ZeroMemory(strValue, sizeof(strValue));
-	ULONG strSize = sizeof(strValue);
+	button = (CButton*)GetDlgItem(IDC_ERG);
+	generateERG = button->GetCheck();
+
+	button = (CButton*)GetDlgItem(IDC_FIT);
+	generateFIT = button->GetCheck();
+	
+	button = (CButton*)GetDlgItem(IDC_ZWO);
+	generateZWO = button->GetCheck();
+	
+	button = (CButton*)GetDlgItem(IDC_NO_OFFSET);
+	generateFEC = button->GetCheck();
+	
+	button = (CButton*)GetDlgItem(IDC_INFO);
+	generateInfo = button->GetCheck();
+
+	wchar_t strValue[MAX_PATH]{ 0 };
+	unsigned long strSize = sizeof(strValue)/sizeof(wchar_t);
 	GetDlgItemText(IDC_FTP, strValue, strSize);
 	unsigned int ftp = _wtoi(strValue);
 	unsigned int offset = 0;
@@ -322,25 +312,22 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 	GetDlgItemText(IDC_WORK_DIR, strValue, strSize);
 	if (generateInfo)
 	{
-		char filePath[_MAX_PATH];
-		sprintf(filePath, "%ws\\workoutsInfo.csv", strValue);
+		std::wstring filePath{ strValue };
+		filePath += L"\\workoutsInfo.csv";
 		workoutData.createFile(filePath);
 	}
 
-	TCHAR selDir[_MAX_PATH];
-	wcscpy(selDir, strValue);
-	StringCchCat(selDir, _MAX_PATH, TEXT("\\*"));
-	hFind = FindFirstFile(selDir, &ffd);
+	std::wstring selectedDirectory{ strValue };
+	selectedDirectory += L"\\*";
+	hFind = FindFirstFile(selectedDirectory.c_str(), &ffd);
 
 	do
-	{
-		char fileName[_MAX_PATH];
-		sprintf(fileName, "%ws", ffd.cFileName);
-		
-		if (isFileTxt(fileName))
+	{		
+		std::wstring fileName{ ffd.cFileName };
+		if (IsFileTxt(fileName))
 		{
-			char completeFilePath[_MAX_PATH];
-			sprintf(completeFilePath, "%ws\\%ws", strValue, ffd.cFileName);
+			std::wstring completeFilePath{ strValue };
+			completeFilePath += ffd.cFileName;
 
 			readFile read;
 			read.openFile(completeFilePath);
@@ -349,7 +336,7 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 
 			if (generateMRC)
 			{
-				PathRenameExtensionA(completeFilePath, ".mrc");
+				ChangeExtension(completeFilePath, L".mrc");
 				writeMRC writeMRC;
 				writeMRC.createFile(completeFilePath);
 				writeMRC.fillFile(read.data);
@@ -358,7 +345,7 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 
 			if (generateERG)
 			{
-				PathRenameExtensionA(completeFilePath, ".erg");
+				ChangeExtension(completeFilePath, L".erg");
 				writeERG writeERG(ftp);
 				writeERG.createFile(completeFilePath);
 				writeERG.fillFile(read.data);
@@ -367,7 +354,7 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 
 			if (generateFIT)
 			{
-				PathRenameExtensionA(completeFilePath, ".fit");
+				ChangeExtension(completeFilePath, L".fit");
 				writeFIT writeFIT(ftp, offset);
 				writeFIT.createFile(completeFilePath);
 				writeFIT.fillFile(read.data);
@@ -376,7 +363,7 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 
 			if (generateZWO)
 			{
-				PathRenameExtensionA(completeFilePath, ".zwo");
+				ChangeExtension(completeFilePath, L".zwo");
 				writeZWO writeZWO;
 				writeZWO.createFile(completeFilePath);
 				writeZWO.fillFile(read.data);
@@ -385,8 +372,8 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 
 			if (generateInfo)
 			{
-				PathRemoveExtensionA(fileName);
-				workoutData.writeWorkoutData(read.data, fileName);
+				std::filesystem::path fsFilePath{ fileName };
+				workoutData.WriteWorkoutData(read.data, fsFilePath.replace_extension("").wstring());
 			}
 		}
 	} while (FindNextFile(hFind, &ffd) != NULL);

@@ -1,9 +1,7 @@
 #include "writeERG.h"
 
-writeERG::writeERG(unsigned int functionalThresholdPower)
+writeERG::writeERG(unsigned int functionalThresholdPower) : writeGeneric(), functionalThresholdPower(functionalThresholdPower), descriptionsTime()
 {
-	memset(outputFileName, NULL, sizeof(outputFileName));
-	this->functionalThresholdPower = functionalThresholdPower;
 }
 
 void writeERG::fillHeader()
@@ -12,7 +10,7 @@ void writeERG::fillHeader()
 	outputFile << "VERSION = 2\n";
 	outputFile << "UNITS = ENGLISH\n";
 	outputFile << "DESCRIPTION = A description\n";
-	outputFile << "FILE NAME = " << removeFilePathAndExtension(outputFileName) << "\n";
+	outputFile << "FILE NAME = " << removeFilePathAndExtension(_outputFileName) << "\n";
 	outputFile << "FTP = " << functionalThresholdPower << "\n";
 	outputFile << "MINUTES WATTS\n";
 	outputFile << "[END COURSE HEADER]\n";
@@ -27,7 +25,7 @@ void writeERG::fillCourse(workoutInfo& data)
 	unsigned int j = 0;
 	for (unsigned int i = 0; i < data.numberOfSteps; i++)
 	{
-		if (data.numberOfDescriptions > 0 && data.stepDescription[i] != "")
+		if (data.numberOfDescriptions > 0 && data.stepDescription[i] != L"")
 		{
 			descriptionsTime[j++] = workoutTotalTime * 60.0;
 		}
@@ -49,7 +47,7 @@ void writeERG::fillDescription(workoutInfo& data)
 		unsigned int j = 0;
 		for (unsigned int i = 0; i < data.numberOfSteps; i++)
 		{
-			if (data.stepDescription[i] != "")
+			if (data.stepDescription[i] != L"")
 			{
 				outputFile << descriptionsTime[j++] << '\t' << data.stepDescription[i] << '\t' << "10" << '\n';
 			}

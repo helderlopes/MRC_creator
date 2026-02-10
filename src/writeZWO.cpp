@@ -2,11 +2,9 @@
 
 void writeZWO::fillHeader()
 {
-	
-	//char* test = removeFilePathAndExtension(outputFileName);
 	outputFile << "<workout_file>\n";
 	outputFile << "\t<author></author>\n";
-	outputFile << "\t<name>" << removeFilePathAndExtension(outputFileName) <<"</name>\n";
+	outputFile << "\t<name>" << removeFilePathAndExtension(_outputFileName) <<"</name>\n";
 	outputFile << "\t<description></description>\n";
 	outputFile << "\t<sportType>bike</sportType>\n"; 
 	outputFile << "\t<tags></tags>\n";
@@ -18,25 +16,25 @@ void writeZWO::fillCourse(workoutInfo& data)
 
 	for (unsigned int i = 0; i < data.numberOfSteps; i++)
 	{
-		string intervalType;
+		std::wstring intervalType;
 		if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
 		{
 			outputFile << "\t\t<SteadyState Duration=\"" << (int)round(data.workoutTimeValue[i]*60) << "\" Power=\"" << (data.workoutFTPValues[i][INITIALFTP]/100.0) << "\"" ;
-			intervalType = "SteadyState";
+			intervalType = L"SteadyState";
 		}
 		else if (data.workoutFTPValues[i][INITIALFTP] < data.workoutFTPValues[i][FINALFTP])
 		{
 			outputFile << "\t\t<Ramp Duration=\"" << (int)round(data.workoutTimeValue[i] * 60) << "\" PowerLow=\"" << (data.workoutFTPValues[i][INITIALFTP] / 100.0) << "\" PowerHigh=\"" << (data.workoutFTPValues[i][FINALFTP] / 100.0) << "\"";
-			intervalType = "Ramp";
+			intervalType = L"Ramp";
 		}
 		else // data.workoutFTPValues[i][INITIALFTP] > data.workoutFTPValues[i][FINALFTP]
 		{
 			outputFile << "\t\t<CoolDown Duration=\"" << (int)round(data.workoutTimeValue[i] * 60) << "\" PowerLow=\"" << (data.workoutFTPValues[i][INITIALFTP] / 100.0) << "\" PowerHigh=\"" << (data.workoutFTPValues[i][FINALFTP] / 100.0) << "\"";
-			intervalType = "CoolDown";
+			intervalType = L"CoolDown";
 		}
 
 		//if there's a description, put it inside the tag
-		if (data.stepDescription[i] != "")
+		if (data.stepDescription[i] != L"")
 		{
 			outputFile << ">\n";
 			outputFile << "\t\t\t<textevent timeoffset=\"0\" message=\"" << data.stepDescription[i] << "\"/>\n";

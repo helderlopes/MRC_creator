@@ -15,7 +15,7 @@ class writeFIT
 public:
 	writeFIT(unsigned int functionalThresholdPower, unsigned int powerRange);
 	~writeFIT();
-	void createFile(char* fileName);
+	void createFile(std::wstring fileName);
 	void closeFile();
 	void fillFile(workoutInfo& data);
 
@@ -28,6 +28,6 @@ private:
 	unsigned int functionalThresholdPower;
 	unsigned int powerRange;
 	fit::Encode encode;
-	fstream outputFile;
-	char outputFileName[_MAX_PATH];
+	std::fstream outputFile;
+	std::wstring _outputFileName;
 };

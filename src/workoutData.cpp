@@ -1,13 +1,10 @@
 #include "workoutData.h"
 #include <math.h>
 
-workoutData::workoutData(unsigned int functionalThresholdPower)
+workoutData::workoutData(unsigned int functionalThresholdPower) : outputFileName(), totalTime(0), 
+normalizedPower(0.0), averagePower(0.0), totalWork(0.0), intensityFactor(0.0), trainingStressScore(0.0), 
+variabilityIndex(0.0), powerBySecond(NULL), functionalThresholdPower(functionalThresholdPower)
 {
-	memset(outputFileName, NULL, sizeof(outputFileName));
-	totalTime = 0;
-	normalizedPower = averagePower = totalWork = intensityFactor = trainingStressScore = variabilityIndex = 0.0;
-	powerBySecond = NULL;
-	this->functionalThresholdPower = functionalThresholdPower;
 }
 
 workoutData::~workoutData()
@@ -22,7 +19,7 @@ workoutData::~workoutData()
 	}
 }
 
-void workoutData::writeWorkoutData(workoutInfo& data, char* workoutName)
+void workoutData::WriteWorkoutData(workoutInfo& data, std::wstring workoutName)
 {
 	calculateTotalTime(data);
 	generatePowerArray(data);
@@ -35,9 +32,9 @@ void workoutData::writeWorkoutData(workoutInfo& data, char* workoutName)
 	fillInfo(workoutName);
 }
 
-void workoutData::createFile(char* fileName)
+void workoutData::createFile(std::wstring fileName)
 {
-	strcpy(outputFileName, fileName);
+	outputFileName = fileName;
 	outputFile.open(outputFileName);
 	fillHeader();
 }
@@ -55,7 +52,7 @@ void workoutData::fillHeader()
 	outputFile << "Name,IF,TSS,NP(W),Time(min),Work(kJ),AvgP(W),VI\n";
 }
 
-void workoutData::fillInfo(char* workoutName)
+void workoutData::fillInfo(std::wstring workoutName)
 {
 	outputFile 
 		<< '"' << workoutName << '"' 
@@ -153,6 +150,10 @@ void workoutData::generatePowerArray(workoutInfo& data)
 
 		for (unsigned int j = 0; j < stepTimeRounded; j++)
 		{
+			// Prevent buffer overrun by checking the index
+			if (currentWorkoutTime + j >= totalTime)
+				break;
+
 			if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
 			{
 				powerBySecond[currentWorkoutTime + j] = (unsigned int)round(data.workoutFTPValues[i][INITIALFTP] * functionalThresholdPower / ONE_CENTURY);

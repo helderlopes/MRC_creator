@@ -5,18 +5,12 @@
 
 std::wstring s2ws(const std::string& str)
 {
-	int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
-	std::wstring wstrTo(size_needed, 0);
-	MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
-	return wstrTo;
+	return std::wstring(str.begin(), str.end());
 }
 
 writeFIT::writeFIT(unsigned int functionalThresholdPower, unsigned int powerRange)
-	: encode(fit::ProtocolVersion::V20)
+	: encode(fit::ProtocolVersion::V20), _outputFileName(), functionalThresholdPower(functionalThresholdPower), powerRange(powerRange)
 {
-	memset(outputFileName, NULL, sizeof(outputFileName));
-	this->functionalThresholdPower = functionalThresholdPower;
-	this->powerRange = powerRange;
 }
 
 writeFIT::~writeFIT()
@@ -28,10 +22,10 @@ writeFIT::~writeFIT()
 	}
 }
 
-void writeFIT::createFile(char* fileName)
+void writeFIT::createFile(std::wstring fileName)
 {
-	strcpy(outputFileName, fileName);
-	outputFile.open(outputFileName, std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc);
+	_outputFileName = fileName;
+	outputFile.open(_outputFileName, std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc);
 	encode.Open(outputFile);
 }
 
@@ -63,7 +57,7 @@ void writeFIT::fillFileId()
 	//fileIdMesg.SetProduct(65534); //65534 = Garmin Edge 520
 	//fileIdMesg.SetSerialNumber(128779944); //My Serial Number
 	//fileIdMesg.SetTimeCreated(915630319); //A random created time
-	fileIdMesg.SetNumber((FIT_UINT16)std::hash<std::string>{}(outputFileName)); //creating a hash from based on file name to be used as a unique identifier
+	fileIdMesg.SetNumber((FIT_UINT16)std::hash<std::wstring>{}(_outputFileName)); //creating a hash from based on file name to be used as a unique identifier
 
 	encode.Write(fileIdMesg);
 
@@ -81,16 +75,16 @@ void writeFIT::fillFileCreator()
 void writeFIT::fillWorkout(FIT_UINT16 numValidSteps)
 {
 	fit::WorkoutMesg workoutMesg;
-	char workoutName[_MAX_PATH];
-	string fileName = outputFileName;
-	fileName = fileName.substr(fileName.find_last_of("/\\") + 1);
-	strcpy(workoutName, fileName.c_str());
-	workoutName[strlen(workoutName) - SIZE_OF_FILE_EXTENSION] = '\0';
+	wchar_t workoutName[_MAX_PATH];
+	std::wstring fileName = _outputFileName;
+	fileName = fileName.substr(fileName.find_last_of(L"/\\") + 1);
+	wcscpy(workoutName, fileName.c_str());
+	workoutName[wcslen(workoutName) - SIZE_OF_FILE_EXTENSION] = '\0';
 
 	workoutMesg.SetCapabilities(FIT_WORKOUT_CAPABILITIES_TCX);
 	workoutMesg.SetNumValidSteps(numValidSteps); //THIS IS THE NUMBER OF STEPS
 	workoutMesg.SetSport(FIT_SPORT_CYCLING);
-	workoutMesg.SetWktName(s2ws(workoutName));
+	workoutMesg.SetWktName(workoutName);
 	encode.Write(workoutMesg);
 }
 
@@ -126,9 +120,9 @@ void writeFIT::fillWorkoutStep(workoutInfo& data)
 			value = FIT_UINT32(maxValue * 0.01 * functionalThresholdPower);
 			workoutStepMesg.SetCustomTargetValueHigh(value + FIT_WORKOUT_POWER_WATTS_OFFSET);
 		}
-		if (data.stepDescription[i] != "")
+		if (data.stepDescription[i] != L"")
 		{
-			workoutStepMesg.SetNotes(s2ws(data.stepDescription[i]));
+			workoutStepMesg.SetNotes(data.stepDescription[i]);
 		}
 
 		workoutStepMesg.SetMessageIndex(i); //incremental (number of step, from 0 to n-1)

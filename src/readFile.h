@@ -1,38 +1,40 @@
 #pragma once
-#include <string.h>
+
+#define _CRT_NON_CONFORMING_WCSTOK 
+
+#include <string>
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
-using namespace std;
 
 #define  ROWSIZE 1024
 
-typedef enum
+enum Column
 {
 	INITIALFTP = 0,
 	FINALFTP,
 	COLUMNSIZE = 2
-} Column;
+};
 
-typedef struct file_tag
+struct workoutInfo
 {
-	unsigned int	numberOfSteps;
-	unsigned int	numberOfDescriptions;
-	unsigned int	workoutFTPValues[ROWSIZE][COLUMNSIZE];
-	double			workoutTimeValue[ROWSIZE];
-	string			stepDescription[ROWSIZE];
-} workoutInfo;
+	unsigned int	numberOfSteps{};
+	unsigned int	numberOfDescriptions{};
+	unsigned int	workoutFTPValues[ROWSIZE][COLUMNSIZE]{};
+	double			workoutTimeValue[ROWSIZE]{};
+	std::wstring	stepDescription[ROWSIZE]{};
+};
 
 class readFile
 {
 public:
 	readFile();
 	~readFile();
-	void openFile(char* fileName);
+	void openFile(std::wstring fileName);
 	void closeFile();
 	void fillData();
 
 	workoutInfo data;
 private:
-	ifstream inputFile;
+	std::wifstream inputFile;
 };

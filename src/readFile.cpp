@@ -1,16 +1,16 @@
 #include "readFile.h"
 
-static string checkQuotesAndGenerateDescription(char* str)
+static std::wstring CheckQuotesAndGenerateDescription(wchar_t* str)
 {
-	char* startPos = strchr(str, '"');
-	if (startPos != NULL)
+	wchar_t* startPos = wcschr(str, L'"');
+	if (startPos != nullptr)
 	{
-		string res(startPos);
+		std::wstring res(startPos);
 		res.pop_back();
 		res.erase(0, 1);
 		return res;
 	}
-	return "";
+	return L"";
 }
 
 readFile::readFile()
@@ -27,7 +27,7 @@ readFile::~readFile()
 	}
 }
 
-void readFile::openFile(char* fileName)
+void readFile::openFile(std::wstring fileName)
 {
 	inputFile.open(fileName);
 }
@@ -42,32 +42,32 @@ void readFile::closeFile()
 
 void readFile::fillData()
 {
-	char curLine[512];
-	char *pValue;
+	wchar_t curLine[512];
+	wchar_t *pValue;
 	if (inputFile.is_open())
 	{
 		while (inputFile.getline(curLine, 512))
 		{
 			//check if there's a workout description
-			data.stepDescription[data.numberOfSteps] = checkQuotesAndGenerateDescription(&curLine[0]);
-			if (data.stepDescription[data.numberOfSteps] != "")
+			data.stepDescription[data.numberOfSteps] = CheckQuotesAndGenerateDescription(&curLine[0]);
+			if (data.stepDescription[data.numberOfSteps] != L"")
 			{
 				data.numberOfDescriptions++;
 			}
 
 			//get step time
-			pValue = strtok(curLine, "\t ,;");
-			data.workoutTimeValue[data.numberOfSteps] = atof(pValue);
+			pValue = _wcstok(curLine, L"\t ,;");
+			data.workoutTimeValue[data.numberOfSteps] = _wtof(pValue);
 
 			//get step min FTP
-			pValue = strtok(NULL, "\t ,;");
-			data.workoutFTPValues[data.numberOfSteps][INITIALFTP] = atoi(pValue);
+			pValue = wcstok(nullptr, L"\t ,;");
+			data.workoutFTPValues[data.numberOfSteps][INITIALFTP] = _wtoi(pValue);
 
 			//get step max FTP
-			pValue = strtok(NULL, "\t ,;");
+			pValue = wcstok(nullptr, L"\t ,;");
 			if (pValue) //if there's a third value, the step is a ramp
 			{
-				data.workoutFTPValues[data.numberOfSteps][FINALFTP] = atoi(pValue);
+				data.workoutFTPValues[data.numberOfSteps][FINALFTP] = _wtoi(pValue);
 			}
 			else //else, the step have a target ftp, so final ftp = initial ftp
 			{

@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <string>
+
 
 // CMRCcreatorDlg dialog
 class CMRCcreatorDlg : public CDialogEx
@@ -23,21 +25,22 @@ public:
 
 // Implementation
 protected:
-	HICON m_hIcon;
+	HICON _icon;
 	void ReadRegistry();
 	void WriteRegistry();
-	bool isFileTxt(char fileName[]);
+	static bool IsFileTxt(std::wstring fileName);
+	static std::wstring ChangeExtension(const std::wstring& filePath, const std::wstring& newExtension);
 
-	const CString REG_SW_GROUP = _T("SOFTWARE\\MRC Creator");
-	const CString REG_KEY_DIR = _T("Directory");
-	const CString REG_KEY_FTP = _T("FTP");
-	const CString REG_KEY_OFFSET = _T("Offset");
-	const CString REG_KEY_MRC = _T("MRC");
-	const CString REG_KEY_ERG = _T("ERG");
-	const CString REG_KEY_FIT = _T("FIT");
-	const CString REG_KEY_ZWO = _T("ZWO");
-	const CString REG_KEY_ANTFEC = _T("ANT+ FE-C");
-	const CString REG_KEY_WORKOUTDATA = _T("Workout Data");
+	const wchar_t* REG_SW_GROUP = L"SOFTWARE\\MRC Creator";
+	const wchar_t* REG_KEY_DIR = L"Directory";
+	const wchar_t* REG_KEY_FTP = L"FTP";
+	const wchar_t* REG_KEY_OFFSET = L"Offset";
+	const wchar_t* REG_KEY_MRC = L"MRC";
+	const wchar_t* REG_KEY_ERG = L"ERG";
+	const wchar_t* REG_KEY_FIT = L"FIT";
+	const wchar_t* REG_KEY_ZWO = L"ZWO";
+	const wchar_t* REG_KEY_ANTFEC = L"ANT+ FE-C";
+	const wchar_t* REG_KEY_WORKOUTDATA = L"Workout Data";
 
 	// Generated message map functions
 	virtual BOOL OnInitDialog();

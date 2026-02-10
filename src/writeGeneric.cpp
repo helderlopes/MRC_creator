@@ -1,16 +1,12 @@
 #include "writeGeneric.h"
 #include <shlwapi.h>
+#include <filesystem>
 
-string removeFilePathAndExtension(char* filePath)
+std::wstring removeFilePathAndExtension(const std::wstring& filePath)
 {
-	string fileName = filePath;
-	fileName = fileName.substr(fileName.find_last_of("/\\") + 1);
-	return fileName;
-}
+	std::filesystem::path path(filePath);
 
-writeGeneric::writeGeneric()
-{
-	memset(outputFileName, NULL, sizeof(outputFileName));
+	return path.stem().wstring();
 }
 
 writeGeneric::~writeGeneric()
@@ -21,10 +17,10 @@ writeGeneric::~writeGeneric()
 	}
 }
 
-void writeGeneric::createFile(char* fileName)
+void writeGeneric::createFile(std::wstring fileName)
 {
-	strcpy(outputFileName, fileName);
-	outputFile.open(outputFileName);
+	_outputFileName = fileName;
+	outputFile.open(_outputFileName);
 }
 
 void writeGeneric::closeFile()
