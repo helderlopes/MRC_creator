@@ -4,14 +4,16 @@
 class writeERG : public writeGeneric
 {
 public:
-	writeERG(unsigned int functionalThresholdPower);
-	void fillFile(workoutInfo& data);
+	writeERG(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps, unsigned int functionalThresholdPower);
+	void fillFile() override;
 
 private:
-	void fillHeader();
-	void fillCourse(workoutInfo& data);
-	void fillDescription(workoutInfo& data);
+	void fillHeader() override;
+	void fillCourse() override;
+	void fillDescription();
 
+	bool hasAnyDescritpion;
 	unsigned int functionalThresholdPower;
-	double descriptionsTime[ROWSIZE];
+	std::vector<double> descriptionsTime;
+	std::vector<WorkoutStep> workoutSteps;
 };

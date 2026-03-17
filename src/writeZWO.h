@@ -6,9 +6,14 @@
 class writeZWO : public writeGeneric
 {
 public:
-	void fillFile(workoutInfo& data);
+	writeZWO(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps);
+	void fillFile() override;
 
 private:
-	void fillHeader();
-	void fillCourse(workoutInfo& data);
+	void fillHeader() override;
+	void fillCourse() override;
+
+	bool hasAnyDescritpion;
+	std::vector<double> descriptionsTime;
+	std::vector<WorkoutStep> workoutSteps;
 };

@@ -8,25 +8,28 @@
 #include "../garminfitsdk/fit_mesg_broadcaster.hpp"
 //#include "fit_date_time.hpp"
 
-#define SIZE_OF_FILE_EXTENSION 4
+constexpr auto SIZE_OF_FILE_EXTENSION = 4;
 
 class writeFIT
 {
 public:
-	writeFIT(unsigned int functionalThresholdPower, unsigned int powerRange);
+	writeFIT(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps, unsigned int functionalThresholdPower, unsigned int powerRange);
 	~writeFIT();
-	void createFile(std::wstring fileName);
+	void createFile();
 	void closeFile();
-	void fillFile(workoutInfo& data);
+	void fillFile();
 
 private:
 	void fillFileId();
 	void fillFileCreator();
-	void fillWorkout(FIT_UINT16 numValidSteps);
-	void fillWorkoutStep(workoutInfo& data);
+	void fillWorkout();
+	void fillWorkoutSteps();
 
 	unsigned int functionalThresholdPower;
 	unsigned int powerRange;
+	bool hasAnyDescritpion;
+	std::vector<double> descriptionsTime;
+	std::vector<WorkoutStep> workoutSteps;
 	fit::Encode encode;
 	std::fstream outputFile;
 	std::wstring _outputFileName;

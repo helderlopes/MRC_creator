@@ -19,10 +19,10 @@ workoutData::~workoutData()
 	}
 }
 
-void workoutData::WriteWorkoutData(workoutInfo& data, std::wstring workoutName)
+void workoutData::WriteWorkoutData(std::vector<WorkoutStep>& workoutSteps, std::wstring workoutName)
 {
-	calculateTotalTime(data);
-	generatePowerArray(data);
+	calculateTotalTime(workoutSteps);
+	generatePowerArray(workoutSteps);
 	calculateWork();
 	calculateAvgP();
 	calculateNP();
@@ -119,16 +119,16 @@ void workoutData::calculateWork()
 	totalWork = (totalWork / ONE_THOUSAND); //J to kJ
 }
 
-void workoutData::calculateTotalTime(workoutInfo& data)
+void workoutData::calculateTotalTime(std::vector<WorkoutStep>& workoutSteps)
 {
 	totalTime = 0;
-	for (unsigned int i = 0; i < data.numberOfSteps; i++)
+	for (const auto& workoutStep : workoutSteps)
 	{
-		totalTime += (unsigned int)round(data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS);
+		totalTime += (unsigned int)round(workoutStep.workoutTimeValue * ONE_MINUTE_IN_SECONDS);
 	}
 }
 
-void workoutData::generatePowerArray(workoutInfo& data)
+void workoutData::generatePowerArray(std::vector<WorkoutStep>& workoutSteps)
 {
 	if (powerBySecond)
 	{
@@ -137,9 +137,9 @@ void workoutData::generatePowerArray(workoutInfo& data)
 	powerBySecond = new unsigned int[totalTime];
 	unsigned int currentWorkoutTime = 0;
 
-	for (unsigned int i = 0; i < data.numberOfSteps; i++)
+	for (const auto& workoutStep : workoutSteps)
 	{
-		double stepTimeInSeconds = data.workoutTimeValue[i] * ONE_MINUTE_IN_SECONDS;
+		double stepTimeInSeconds = workoutStep.workoutTimeValue * ONE_MINUTE_IN_SECONDS;
 		unsigned int stepTimeRounded = (unsigned int)round(stepTimeInSeconds);
 
 		// Ensure we do not write past the end of powerBySecond
@@ -148,22 +148,22 @@ void workoutData::generatePowerArray(workoutInfo& data)
 			stepTimeRounded = totalTime > currentWorkoutTime ? totalTime - currentWorkoutTime : 0;
 		}
 
-		for (unsigned int j = 0; j < stepTimeRounded; j++)
+		for (unsigned int i = 0; i < stepTimeRounded; i++)
 		{
 			// Prevent buffer overrun by checking the index
-			if (currentWorkoutTime + j >= totalTime)
+			if (currentWorkoutTime + i >= totalTime)
 				break;
 
-			if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
+			if (workoutStep.workoutFTPValues[INITIALFTP] == workoutStep.workoutFTPValues[FINALFTP])
 			{
-				powerBySecond[currentWorkoutTime + j] = (unsigned int)round(data.workoutFTPValues[i][INITIALFTP] * functionalThresholdPower / ONE_CENTURY);
+				powerBySecond[currentWorkoutTime + i] = (unsigned int)round(workoutStep.workoutFTPValues[INITIALFTP] * functionalThresholdPower / ONE_CENTURY);
 			}
 			else
 			{
-				int diff = (data.workoutFTPValues[i][FINALFTP] - data.workoutFTPValues[i][INITIALFTP]);
-				double ramp = ((j + 1.0) / (stepTimeInSeconds));
+				int diff = (workoutStep.workoutFTPValues[FINALFTP] - workoutStep.workoutFTPValues[INITIALFTP]);
+				double ramp = ((i + 1.0) / (stepTimeInSeconds));
 				int rampRate = (int)(diff * ramp);
-				powerBySecond[currentWorkoutTime + j] = (unsigned int)round((data.workoutFTPValues[i][INITIALFTP] + rampRate) * functionalThresholdPower / ONE_CENTURY);
+				powerBySecond[currentWorkoutTime + i] = (unsigned int)round((workoutStep.workoutFTPValues[INITIALFTP] + rampRate) * functionalThresholdPower / ONE_CENTURY);
 			}
 		}
 		currentWorkoutTime += stepTimeRounded;

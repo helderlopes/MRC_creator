@@ -3,13 +3,13 @@
 #include <functional>
 #include "shlwapi.h"
 
-std::wstring s2ws(const std::string& str)
+static std::wstring s2ws(const std::string& str)
 {
 	return std::wstring(str.begin(), str.end());
 }
 
-writeFIT::writeFIT(unsigned int functionalThresholdPower, unsigned int powerRange)
-	: encode(fit::ProtocolVersion::V20), _outputFileName(), functionalThresholdPower(functionalThresholdPower), powerRange(powerRange)
+writeFIT::writeFIT(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps, unsigned int functionalThresholdPower, unsigned int powerRange)
+	: encode(fit::ProtocolVersion::V20), _outputFileName(fileName), functionalThresholdPower(functionalThresholdPower), powerRange(powerRange), hasAnyDescritpion(false), workoutSteps(workoutSteps)
 {
 }
 
@@ -22,9 +22,8 @@ writeFIT::~writeFIT()
 	}
 }
 
-void writeFIT::createFile(std::wstring fileName)
+void writeFIT::createFile()
 {
-	_outputFileName = fileName;
 	outputFile.open(_outputFileName, std::ios::in | std::ios::out | std::ios::binary | std::ios::trunc);
 	encode.Open(outputFile);
 }
@@ -38,15 +37,15 @@ void writeFIT::closeFile()
 	}
 }
 
-void writeFIT::fillFile(workoutInfo& data)
+void writeFIT::fillFile()
 {
 	fillFileId();
 
 	//fillFileCreator();
 	
-	fillWorkout(data.numberOfSteps);
+	fillWorkout();
 	
-	fillWorkoutStep(data);
+	fillWorkoutSteps();
 }
 
 void writeFIT::fillFileId()
@@ -72,8 +71,10 @@ void writeFIT::fillFileCreator()
 	encode.Write(fileCreatorMesg);
 }
 
-void writeFIT::fillWorkout(FIT_UINT16 numValidSteps)
+void writeFIT::fillWorkout()
 {
+	FIT_UINT16 numValidSteps = static_cast<FIT_UINT16>(workoutSteps.size());
+
 	fit::WorkoutMesg workoutMesg;
 	wchar_t workoutName[_MAX_PATH];
 	std::wstring fileName = _outputFileName;
@@ -88,31 +89,32 @@ void writeFIT::fillWorkout(FIT_UINT16 numValidSteps)
 	encode.Write(workoutMesg);
 }
 
-void writeFIT::fillWorkoutStep(workoutInfo& data)
+void writeFIT::fillWorkoutSteps()
 {
-	for (unsigned int i = 0; i < data.numberOfSteps; i++)
+	int i = 0;
+	for (const auto& workoustStep : workoutSteps)
 	{
 		fit::WorkoutStepMesg workoutStepMesg;
-		workoutStepMesg.SetDurationValue(FIT_UINT32(round(data.workoutTimeValue[i] * 60)) * 1000); //step time in ms
+		workoutStepMesg.SetDurationValue(FIT_UINT32(round(workoustStep.workoutTimeValue * 60)) * 1000); //step time in ms
 		workoutStepMesg.SetTargetValue(0);
-		if (data.workoutFTPValues[i][INITIALFTP] == data.workoutFTPValues[i][FINALFTP])
+		if (workoustStep.workoutFTPValues[INITIALFTP] == workoustStep.workoutFTPValues[FINALFTP])
 		{
-			FIT_UINT32 value = FIT_UINT32(data.workoutFTPValues[i][INITIALFTP] * 0.01 * functionalThresholdPower);
+			FIT_UINT32 value = FIT_UINT32(workoustStep.workoutFTPValues[INITIALFTP] * 0.01 * functionalThresholdPower);
 			workoutStepMesg.SetCustomTargetValueLow(value + FIT_WORKOUT_POWER_WATTS_OFFSET - powerRange); //always add 1000 to target power
 			workoutStepMesg.SetCustomTargetValueHigh(value + FIT_WORKOUT_POWER_WATTS_OFFSET + powerRange);
 		}
 		else
 		{
 			unsigned int minValue, maxValue;
-			if (data.workoutFTPValues[i][FINALFTP] > data.workoutFTPValues[i][INITIALFTP]) //if the file have an inverse ramp, fix the minimum and maximum values for garmin
+			if (workoustStep.workoutFTPValues[FINALFTP] > workoustStep.workoutFTPValues[INITIALFTP]) //if the file have an inverse ramp, fix the minimum and maximum values for garmin
 			{
-				minValue = data.workoutFTPValues[i][INITIALFTP];
-				maxValue = data.workoutFTPValues[i][FINALFTP];
+				minValue = workoustStep.workoutFTPValues[INITIALFTP];
+				maxValue = workoustStep.workoutFTPValues[FINALFTP];
 			}
 			else
 			{
-				minValue = data.workoutFTPValues[i][FINALFTP];
-				maxValue = data.workoutFTPValues[i][INITIALFTP];
+				minValue = workoustStep.workoutFTPValues[FINALFTP];
+				maxValue = workoustStep.workoutFTPValues[INITIALFTP];
 			}
 			FIT_UINT32 value = FIT_UINT32(minValue * 0.01 * functionalThresholdPower);
 			workoutStepMesg.SetCustomTargetValueLow(value + FIT_WORKOUT_POWER_WATTS_OFFSET); //always add 1000 to target power
@@ -120,12 +122,12 @@ void writeFIT::fillWorkoutStep(workoutInfo& data)
 			value = FIT_UINT32(maxValue * 0.01 * functionalThresholdPower);
 			workoutStepMesg.SetCustomTargetValueHigh(value + FIT_WORKOUT_POWER_WATTS_OFFSET);
 		}
-		if (data.stepDescription[i] != L"")
+		if (!workoustStep.stepDescription.empty())
 		{
-			workoutStepMesg.SetNotes(data.stepDescription[i]);
+			workoutStepMesg.SetNotes(workoustStep.stepDescription);
 		}
 
-		workoutStepMesg.SetMessageIndex(i); //incremental (number of step, from 0 to n-1)
+		workoutStepMesg.SetMessageIndex(i++); //incremental (number of step, from 0 to n-1)
 		workoutStepMesg.SetDurationType(FIT_WKT_STEP_DURATION_TIME);
 		workoutStepMesg.SetTargetType(FIT_WKT_STEP_TARGET_POWER_3S);	//FIT_WKT_STEP_TARGET_POWER_3S, FIT_WKT_STEP_TARGET_POWER_10S, FIT_WKT_STEP_TARGET_POWER_30S 
 		workoutStepMesg.SetIntensity(FIT_INTENSITY_ACTIVE);

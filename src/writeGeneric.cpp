@@ -9,6 +9,10 @@ std::wstring removeFilePathAndExtension(const std::wstring& filePath)
 	return path.stem().wstring();
 }
 
+writeGeneric::writeGeneric(const std::wstring& fileName) : _outputFileName(fileName)
+{
+}
+
 writeGeneric::~writeGeneric()
 {
 	if (outputFile.is_open())
@@ -17,9 +21,8 @@ writeGeneric::~writeGeneric()
 	}
 }
 
-void writeGeneric::createFile(std::wstring fileName)
+void writeGeneric::createFile()
 {
-	_outputFileName = fileName;
 	outputFile.open(_outputFileName);
 }
 

@@ -4,12 +4,15 @@
 class writeMRC : public writeGeneric
 {
 public:
-	void fillFile(workoutInfo &data);
+	writeMRC(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps);
+	void fillFile() override;
 
 private:
-	void fillHeader();
-	void fillCourse(workoutInfo& data);
-	void fillDescription(workoutInfo& data);
+	void fillHeader() override;
+	void fillCourse() override;
+	void fillDescription();
 
-	double descriptionsTime[ROWSIZE]{};
+	bool hasAnyDescritpion;
+	std::vector<double> descriptionsTime;
+	std::vector<WorkoutStep> workoutSteps;
 };

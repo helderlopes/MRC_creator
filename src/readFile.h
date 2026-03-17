@@ -6,8 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
-
-#define  ROWSIZE 1024
+#include <vector>
 
 enum Column
 {
@@ -16,25 +15,25 @@ enum Column
 	COLUMNSIZE = 2
 };
 
-struct workoutInfo
+struct WorkoutStep
 {
-	unsigned int	numberOfSteps{};
-	unsigned int	numberOfDescriptions{};
-	unsigned int	workoutFTPValues[ROWSIZE][COLUMNSIZE]{};
-	double			workoutTimeValue[ROWSIZE]{};
-	std::wstring	stepDescription[ROWSIZE]{};
+	unsigned int	workoutFTPValues[COLUMNSIZE] = {0};
+	double			workoutTimeValue = 0.0;
+	std::wstring	stepDescription;
 };
 
 class readFile
 {
+private:
+	std::wstring fileName;
+	std::wifstream inputFile;
+
 public:
-	readFile();
+	readFile(std::wstring fileName);
 	~readFile();
-	void openFile(std::wstring fileName);
+	void openFile();
 	void closeFile();
 	void fillData();
 
-	workoutInfo data;
-private:
-	std::wifstream inputFile;
+	std::vector<WorkoutStep> workoutSteps;
 };

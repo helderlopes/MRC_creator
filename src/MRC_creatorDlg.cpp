@@ -327,53 +327,54 @@ void CMRCcreatorDlg::OnBnClickedGenerate()
 		if (IsFileTxt(fileName))
 		{
 			std::wstring completeFilePath{ strValue };
+			completeFilePath += '\\';
 			completeFilePath += ffd.cFileName;
 
-			readFile read;
-			read.openFile(completeFilePath);
+			readFile read(completeFilePath);
+			read.openFile();
 			read.fillData();
 			read.closeFile();
 
 			if (generateMRC)
 			{
-				ChangeExtension(completeFilePath, L".mrc");
-				writeMRC writeMRC;
-				writeMRC.createFile(completeFilePath);
-				writeMRC.fillFile(read.data);
+				completeFilePath = ChangeExtension(completeFilePath, L".mrc");
+				writeMRC writeMRC(completeFilePath, read.workoutSteps);
+				writeMRC.createFile();
+				writeMRC.fillFile();
 				writeMRC.closeFile();
 			}
 
 			if (generateERG)
 			{
-				ChangeExtension(completeFilePath, L".erg");
-				writeERG writeERG(ftp);
-				writeERG.createFile(completeFilePath);
-				writeERG.fillFile(read.data);
+				completeFilePath = ChangeExtension(completeFilePath, L".erg");
+				writeERG writeERG(completeFilePath, read.workoutSteps, ftp);
+				writeERG.createFile();
+				writeERG.fillFile();
 				writeERG.closeFile();
 			}
 
 			if (generateFIT)
 			{
-				ChangeExtension(completeFilePath, L".fit");
-				writeFIT writeFIT(ftp, offset);
-				writeFIT.createFile(completeFilePath);
-				writeFIT.fillFile(read.data);
+				completeFilePath = ChangeExtension(completeFilePath, L".fit");
+				writeFIT writeFIT(completeFilePath, read.workoutSteps, ftp, offset);
+				writeFIT.createFile();
+				writeFIT.fillFile();
 				writeFIT.closeFile();
 			}
 
 			if (generateZWO)
 			{
-				ChangeExtension(completeFilePath, L".zwo");
-				writeZWO writeZWO;
-				writeZWO.createFile(completeFilePath);
-				writeZWO.fillFile(read.data);
+				completeFilePath = ChangeExtension(completeFilePath, L".zwo");
+				writeZWO writeZWO(completeFilePath, read.workoutSteps);
+				writeZWO.createFile();
+				writeZWO.fillFile();
 				writeZWO.closeFile();
 			}
 
 			if (generateInfo)
 			{
 				std::filesystem::path fsFilePath{ fileName };
-				workoutData.WriteWorkoutData(read.data, fsFilePath.replace_extension("").wstring());
+				workoutData.WriteWorkoutData(read.workoutSteps, fsFilePath.replace_extension("").wstring());
 			}
 		}
 	} while (FindNextFile(hFind, &ffd) != NULL);

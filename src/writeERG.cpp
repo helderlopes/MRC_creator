@@ -1,6 +1,7 @@
 #include "writeERG.h"
 
-writeERG::writeERG(unsigned int functionalThresholdPower) : writeGeneric(), functionalThresholdPower(functionalThresholdPower), descriptionsTime()
+writeERG::writeERG(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps, unsigned int functionalThresholdPower) :
+	writeGeneric(fileName), workoutSteps(workoutSteps), functionalThresholdPower(functionalThresholdPower), hasAnyDescritpion(false)
 {
 }
 
@@ -16,40 +17,41 @@ void writeERG::fillHeader()
 	outputFile << "[END COURSE HEADER]\n";
 }
 
-void writeERG::fillCourse(workoutInfo& data)
+void writeERG::fillCourse()
 {
 	double workoutTotalTime = 0.0;
 
 	outputFile << "[COURSE DATA]\n";
 
-	unsigned int j = 0;
-	for (unsigned int i = 0; i < data.numberOfSteps; i++)
+	for (const auto& workoutStep : workoutSteps)
 	{
-		if (data.numberOfDescriptions > 0 && data.stepDescription[i] != L"")
+		if (!workoutStep.stepDescription.empty())
 		{
-			descriptionsTime[j++] = workoutTotalTime * 60.0;
+			hasAnyDescritpion = true;
+			descriptionsTime.push_back(workoutTotalTime * 60.0);
 		}
 
-		outputFile << workoutTotalTime << " " << (data.workoutFTPValues[i][INITIALFTP] * functionalThresholdPower / 100) << '\n';
-		workoutTotalTime += data.workoutTimeValue[i];																			//course data format:	initial time	initial ftp value
-		outputFile << workoutTotalTime << " " << (data.workoutFTPValues[i][FINALFTP] * functionalThresholdPower / 100) << '\n';	//						final time		final ftp value
+		outputFile << workoutTotalTime << " " << (workoutStep.workoutFTPValues[INITIALFTP] * functionalThresholdPower / 100) << '\n';
+		workoutTotalTime += workoutStep.workoutTimeValue;																			//course data format:	initial time	initial ftp value
+		outputFile << workoutTotalTime << " " << (workoutStep.workoutFTPValues[FINALFTP] * functionalThresholdPower / 100) << '\n';	//						final time		final ftp value
 
 	}
 
 	outputFile << "[END COURSE DATA]\n";
 }
 
-void writeERG::fillDescription(workoutInfo& data)
+void writeERG::fillDescription()
 {
-	if (data.numberOfDescriptions > 0)
+	if (hasAnyDescritpion)
 	{
+		int i = 0;
 		outputFile << "[COURSE TEXT]\n";
-		unsigned int j = 0;
-		for (unsigned int i = 0; i < data.numberOfSteps; i++)
+
+		for (const auto& workoutStep : workoutSteps)
 		{
-			if (data.stepDescription[i] != L"")
+			if (!workoutStep.stepDescription.empty())
 			{
-				outputFile << descriptionsTime[j++] << '\t' << data.stepDescription[i] << '\t' << "10" << '\n';
+				outputFile << descriptionsTime[i++] << '\t' << workoutStep.stepDescription << '\t' << "10" << '\n';
 			}
 			
 		}
@@ -58,12 +60,12 @@ void writeERG::fillDescription(workoutInfo& data)
 	}
 }
 
-void writeERG::fillFile(workoutInfo& data)
+void writeERG::fillFile()
 {
 	if (outputFile.is_open())
 	{
 		fillHeader();
-		fillCourse(data);
-		fillDescription(data);
+		fillCourse();
+		fillDescription();
 	}
 }
