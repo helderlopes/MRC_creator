@@ -1,7 +1,7 @@
 #include "workoutData.h"
 #include <math.h>
 
-workoutData::workoutData(unsigned int functionalThresholdPower) : outputFileName(), totalTime(0), 
+workoutData::workoutData(unsigned int functionalThresholdPower) : outputFileName(), totalTime(1), 
 normalizedPower(0.0), averagePower(0.0), totalWork(0.0), intensityFactor(0.0), trainingStressScore(0.0), 
 variabilityIndex(0.0), powerBySecond(NULL), functionalThresholdPower(functionalThresholdPower)
 {

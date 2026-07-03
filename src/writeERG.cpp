@@ -1,7 +1,7 @@
 #include "writeERG.h"
 
 writeERG::writeERG(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps, unsigned int functionalThresholdPower) :
-	writeGeneric(fileName), workoutSteps(workoutSteps), functionalThresholdPower(functionalThresholdPower), hasAnyDescritpion(false)
+	writeGeneric(fileName), workoutSteps(workoutSteps), functionalThresholdPower(functionalThresholdPower), hasAnyDescription(false)
 {
 }
 
@@ -27,7 +27,7 @@ void writeERG::fillCourse()
 	{
 		if (!workoutStep.stepDescription.empty())
 		{
-			hasAnyDescritpion = true;
+			hasAnyDescription = true;
 			descriptionsTime.push_back(workoutTotalTime * 60.0);
 		}
 
@@ -42,7 +42,7 @@ void writeERG::fillCourse()
 
 void writeERG::fillDescription()
 {
-	if (hasAnyDescritpion)
+	if (hasAnyDescription)
 	{
 		int i = 0;
 		outputFile << "[COURSE TEXT]\n";

@@ -1,6 +1,6 @@
 #include "writeZWO.h"
 
-writeZWO::writeZWO(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps) : writeGeneric(fileName), workoutSteps(workoutSteps), hasAnyDescritpion(false)
+writeZWO::writeZWO(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps) : writeGeneric(fileName), workoutSteps(workoutSteps), hasAnyDescription(false)
 {
 }
 

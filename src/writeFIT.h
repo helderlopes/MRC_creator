@@ -27,7 +27,7 @@ private:
 
 	unsigned int functionalThresholdPower;
 	unsigned int powerRange;
-	bool hasAnyDescritpion;
+	bool hasAnyDescription;
 	std::vector<double> descriptionsTime;
 	std::vector<WorkoutStep> workoutSteps;
 	fit::Encode encode;

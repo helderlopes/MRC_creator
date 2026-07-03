@@ -12,7 +12,7 @@ private:
 	void fillCourse() override;
 	void fillDescription();
 
-	bool hasAnyDescritpion;
+	bool hasAnyDescription;
 	unsigned int functionalThresholdPower;
 	std::vector<double> descriptionsTime;
 	std::vector<WorkoutStep> workoutSteps;

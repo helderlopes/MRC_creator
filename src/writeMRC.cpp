@@ -1,6 +1,6 @@
 #include "writeMRC.h"
 
-writeMRC::writeMRC(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps) : writeGeneric(fileName), workoutSteps(workoutSteps), hasAnyDescritpion(false)
+writeMRC::writeMRC(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps) : writeGeneric(fileName), workoutSteps(workoutSteps), hasAnyDescription(false)
 {
 }
 
@@ -35,7 +35,7 @@ void writeMRC::fillCourse()
 	{
 		if (!workoutStep.stepDescription.empty())
 		{
-			hasAnyDescritpion = true;
+			hasAnyDescription = true;
 			descriptionsTime.push_back(workoutTotalTime * 60.0);
 		}
 
@@ -51,7 +51,7 @@ void writeMRC::fillCourse()
 
 void writeMRC::fillDescription()
 {
-	if (hasAnyDescritpion)
+	if (hasAnyDescription)
 	{
 		int i = 0;
 		outputFile << "[COURSE TEXT]\n";

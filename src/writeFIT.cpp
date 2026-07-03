@@ -9,7 +9,7 @@ static std::wstring s2ws(const std::string& str)
 }
 
 writeFIT::writeFIT(const std::wstring& fileName, std::vector<WorkoutStep>& workoutSteps, unsigned int functionalThresholdPower, unsigned int powerRange)
-	: encode(fit::ProtocolVersion::V20), _outputFileName(fileName), functionalThresholdPower(functionalThresholdPower), powerRange(powerRange), hasAnyDescritpion(false), workoutSteps(workoutSteps)
+	: encode(fit::ProtocolVersion::V20), _outputFileName(fileName), functionalThresholdPower(functionalThresholdPower), powerRange(powerRange), hasAnyDescription(false), workoutSteps(workoutSteps)
 {
 }
 

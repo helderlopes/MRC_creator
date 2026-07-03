@@ -12,7 +12,7 @@ private:
 	void fillCourse() override;
 	void fillDescription();
 
-	bool hasAnyDescritpion;
+	bool hasAnyDescription;
 	std::vector<double> descriptionsTime;
 	std::vector<WorkoutStep> workoutSteps;
 };
